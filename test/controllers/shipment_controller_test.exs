@@ -2,7 +2,7 @@ defmodule Parcelmagic.ShipmentControllerTest do
   use Parcelmagic.ConnCase
 
   alias Parcelmagic.Shipment
-  @valid_attrs %{batch_message: "some content", batch_status: "some content", carrier: "some content", customs_info: "some content", easypost_id: "some content", from_address: "some content", insurance: "120.5", options: "some content", parcel: "some content", reference: "some content", refund_status: "some content", return_address: "some content", selected_rate: "some content", service: "some content", to_address: "some content", tracking_code: "some content"}
+  @valid_attrs %{customs_info: "some content", easypost_id: "some content", from_address: "some content", insurance: "120.5", parcel: "some content", reference: "some content", service: "some content", to_address: "some content"}
   @invalid_attrs %{}
 
   setup do

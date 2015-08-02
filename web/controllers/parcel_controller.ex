@@ -1,5 +1,7 @@
 defmodule Parcelmagic.ParcelController do
   use Parcelmagic.Web, :controller
+  use Easypost.Client, endpoint: Application.get_env(:parcelmagic, :easypost_endpoint),                    
+                       key: Application.get_env(:parcelmagic, :easypost_key)
 
   alias Parcelmagic.Parcel
 
@@ -11,15 +13,23 @@ defmodule Parcelmagic.ParcelController do
   end
 
   def create(conn, %{"parcel" => parcel_params}) do
-    changeset = Parcel.changeset(%Parcel{}, parcel_params)
+    case create_parcel(parcel_params) do
+      {:ok, response} ->  
+        parcel_params = response |> Map.put("easypost_id", response["id"])
+        changeset = Parcel.changeset(%Parcel{}, parcel_params)
 
-    case Repo.insert(changeset) do
-      {:ok, parcel} ->
-        render(conn, "show.json", parcel: parcel)
-      {:error, changeset} ->
+        case Repo.insert(changeset) do
+          {:ok, parcel} ->
+            render(conn, "show.json", parcel: parcel)
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(Parcelmagic.ChangesetView, "error.json", changeset: changeset)
+        end
+      {:error, _status, reason} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Parcelmagic.ChangesetView, "error.json", changeset: changeset)
+        |> render(Parcelmagic.ChangesetView, "error.json", changeset: reason)
     end
   end
 
@@ -29,16 +39,24 @@ defmodule Parcelmagic.ParcelController do
   end
 
   def update(conn, %{"id" => id, "parcel" => parcel_params}) do
-    parcel = Repo.get!(Parcel, id)
-    changeset = Parcel.changeset(parcel, parcel_params)
+    case create_parcel(parcel_params) do
+      {:ok, response} ->  
+        parcel_params = response |> Map.put("easypost_id", response["id"])
+        parcel = Repo.get!(Parcel, id)
+        changeset = Parcel.changeset(parcel, parcel_params)
 
-    case Repo.update(changeset) do
-      {:ok, parcel} ->
-        render(conn, "show.json", parcel: parcel)
-      {:error, changeset} ->
+        case Repo.update(changeset) do
+          {:ok, parcel} ->
+            render(conn, "show.json", parcel: parcel)
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(Parcelmagic.ChangesetView, "error.json", changeset: changeset)
+        end
+      {:error, _status, reason} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Parcelmagic.ChangesetView, "error.json", changeset: changeset)
+        |> render(Parcelmagic.ChangesetView, "error.json", changeset: reason)
     end
   end
 

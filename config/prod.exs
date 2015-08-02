@@ -52,4 +52,4 @@ config :logger, level: :info
 import_config "prod.secret.exs"
 
 config :parcelmagic, easypost_endpoint: "https://api.easypost.com/v2/",
-                     easypost_key: "live_key##############",
+                     easypost_key: "live_key##############"

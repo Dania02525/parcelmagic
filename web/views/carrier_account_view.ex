@@ -11,13 +11,13 @@ defmodule Parcelmagic.CarrierAccountView do
 
   def render("carrier_account.json", %{carrier_account: carrier_account}) do
     %{
-      id: carrier_account.id
-      easypost_id: carrier_account.easypost_id,
-      reference: carrier_account.reference,
+      id: carrier_account.id,
+      type: carrier_account.type,
       description: carrier_account.description,
-      credentials: carrier_account.credentials,
-      logo: carrier_account.logo,
+      reference: carrier_account.reference,
       readable: carrier_account.readable,
+      logo: carrier_account.logo,
+      easypost_id: carrier_account.easypost_id
     }
   end
 end

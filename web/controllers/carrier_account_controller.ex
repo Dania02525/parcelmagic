@@ -3,7 +3,6 @@ defmodule Parcelmagic.CarrierAccountController do
   use Easypost.Client, endpoint: Application.get_env(:parcelmagic, :easypost_endpoint),                    
                        key: Application.get_env(:parcelmagic, :easypost_key)
 
-
   alias Parcelmagic.CarrierAccount
 
   plug :scrub_params, "carrier_account" when action in [:create, :update]
@@ -15,7 +14,7 @@ defmodule Parcelmagic.CarrierAccountController do
 
   def create(conn, %{"carrier_account" => carrier_account_params}) do
     case add_carrier_account(carrier_account_params) do
-      {:ok, response} ->
+      {:ok, response} ->  
         carrier_account_params = response |> Map.put("easypost_id", response["id"])
         changeset = CarrierAccount.changeset(%CarrierAccount{}, carrier_account_params)
 
@@ -41,7 +40,7 @@ defmodule Parcelmagic.CarrierAccountController do
 
   def update(conn, %{"id" => id, "carrier_account" => carrier_account_params}) do
     case add_carrier_account(carrier_account_params) do
-      {:ok, response} ->
+      {:ok, response} ->  
         carrier_account_params = response |> Map.put("easypost_id", response["id"])
         carrier_account = Repo.get!(CarrierAccount, id)
         changeset = CarrierAccount.changeset(carrier_account, carrier_account_params)

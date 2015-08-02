@@ -3,7 +3,7 @@ defmodule Parcelmagic.CarrierAccountTest do
 
   alias Parcelmagic.CarrierAccount
 
-  @valid_attrs %{credentials: "some content", description: "some content", easypost_id: "some content", logo: "some content", readable: "some content", reference: "some content"}
+  @valid_attrs %{description: "some content", easypost_id: "some content", logo: "some content", readable: "some content", reference: "some content", type: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

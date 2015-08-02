@@ -18,4 +18,4 @@ config :parcelmagic, Parcelmagic.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :parcelmagic, easypost_endpoint: "https://api.easypost.com/v2/",
-                     easypost_key: "test_key##############",
+                     easypost_key: "test_key##############"

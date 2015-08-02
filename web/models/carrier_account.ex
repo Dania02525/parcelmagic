@@ -2,17 +2,17 @@ defmodule Parcelmagic.CarrierAccount do
   use Parcelmagic.Web, :model
 
   schema "carrier_accounts" do
-    field :reference, :string
+    field :type, :string
     field :description, :string
-    field :credentials, :map
-    field :logo, :string
+    field :reference, :string
     field :readable, :string
+    field :logo, :string
     field :easypost_id, :string
 
     timestamps
   end
 
-  @required_fields ~w(credentials readable easypost_id)
+  @required_fields ~w(type readable easypost_id)
   @optional_fields ~w(reference description logo)
 
   @doc """

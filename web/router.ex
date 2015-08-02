@@ -29,10 +29,10 @@ defmodule Parcelmagic.Router do
     get "/", PageController, :index
   end
 
-  scope "login" Parcelmagic do
+  scope "login", Parcelmagic do
     pipe_through :insecureapi # Use the insecure api stack
 
-    post "/login" UserController, :login
+    post "/login", UserController, :login
   end
 
   scope "/api", Parcelmagic do
@@ -45,6 +45,8 @@ defmodule Parcelmagic.Router do
     resources "/parcels", ParcelController
     resources "/pickups", PickupController
     resources "/shipments", ShipmentController
+    post "shipments/buy", ShipmentController, :buy
+    get "shipments/track/:id", ShipmentController, :track
     resources "/users", UserController
   end
 end
