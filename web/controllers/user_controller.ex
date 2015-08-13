@@ -6,6 +6,16 @@ defmodule Parcelmagic.UserController do
 
   plug :scrub_params, "user" when action in [:create, :update]
 
+  def login(conn, params) do
+    case User.verifylogin(params) do
+      {:ok, id}->
+        {:ok, token} = Joken.encode(%{userid: id})
+        json conn |> put_status(200), %{"token" => token}
+      {:error, reason} ->
+        json conn |> put_status(400), %{"message" => reason}
+    end
+  end
+
   def index(conn, _params) do
     users = Repo.all(User)
     render(conn, "index.json", users: users)
@@ -54,7 +64,7 @@ defmodule Parcelmagic.UserController do
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    user = Repo.delete!(user)
+    Repo.delete!(user)
 
     send_resp(conn, :no_content, "")
   end

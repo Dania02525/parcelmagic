@@ -1,32 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Parcelmagic</title>
+        
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <link rel="apple-touch-startup-image" href="<%= static_path(@conn, "/lib/durandal/img/ios-startup-image-landscape.png") %>" media="(orientation:landscape)" />
+        <link rel="apple-touch-startup-image" href="<%= static_path(@conn, "/lib/durandal/img/ios-startup-image-portrait.png") %>" media="(orientation:portrait)" />
+        <link rel="apple-touch-icon" href="<%= static_path(@conn, "/lib/durandal/img/icon.png") %>"/>       
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <link rel="stylesheet" href="<%= static_path(@conn, "/lib/materialize/css/materialize.min.css") %>" />
+        <link rel="stylesheet" href="<%= static_path(@conn, "/lib/font-awesome/css/font-awesome.min.css") %>" />
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/ie10mobile.css") %>" />
+        <link rel="stylesheet" href="<%= static_path(@conn, "/lib/durandal/css/durandal.css") %>" />
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/starterkit.css") %>" />
+        
+        <script type="text/javascript">
+            if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+                var msViewportStyle = document.createElement("style");
+                var mq = "@@-ms-viewport{width:auto!important}";
+                msViewportStyle.appendChild(document.createTextNode(mq));
+                document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+            }
+        </script>
+    </head>
+    <main>
+      <body>
 
-    <title>Hello Phoenix!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-  </head>
+        <%= @inner %>
 
-  <body>
-    <div class="container" role="main">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-        </ul>
-        <span class="logo"></span>
+      <script src="<%= static_path(@conn, "/lib/require/require.js") %>" data-main="app/main"></script>
+      </body>
+    </main>
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Footer Content</h5>
+            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          </div>
+        </div>
       </div>
-
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <%= @inner %>
-
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    
-  </body>
+      <div class="footer-copyright">
+        <div class="container">
+        © 2015 Copyright Parcelmagic
+        <span class="grey-text text-lighten-4 right">Made with <i class="material-icons" style="font-size:15px">favorite</i> in Pflugerville</span>
+        </div>
+      </div>
+    </footer>
 </html>
+

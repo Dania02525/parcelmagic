@@ -9,7 +9,7 @@ use Mix.Config
 config :parcelmagic, Parcelmagic.Endpoint,
   http: [port: 4000],
   debug_errors: true,
-  code_reloader: true,
+  code_reloader: false,
   cache_static_lookup: false,
   watchers: []
 

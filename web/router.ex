@@ -3,9 +3,6 @@ defmodule Parcelmagic.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
   end
 
   pipeline :api do
@@ -26,13 +23,13 @@ defmodule Parcelmagic.Router do
   scope "/app", Parcelmagic do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", AppController, :index
   end
 
-  scope "login", Parcelmagic do
+  scope "/login", Parcelmagic do
     pipe_through :insecureapi # Use the insecure api stack
 
-    post "/login", UserController, :login
+    post "/", UserController, :login
   end
 
   scope "/api", Parcelmagic do

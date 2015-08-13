@@ -22,8 +22,8 @@ defmodule Parcelmagic.ShipmentController do
         case Repo.insert(changeset) do
           {:ok, shipment} ->
             rates = Enum.map(response["rates"], fn(x)-> Map.put(x, "easypost_id", x["id"]) end)
-                    |> Enum.map(fn(x)-> Map.put(x, "shipment_easypost_id", x["shipment_id"])
-                    |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id)
+                    |> Enum.map(fn(x)-> Map.put(x, "shipment_easypost_id", x["shipment_id"]) end)
+                    |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id) end)
                     |> Enum.map(fn({k,v})-> {String.to_atom(k), v} end)                    
             render(conn, "quotes.json", rates: rates)
           {:error, changeset} ->
@@ -59,8 +59,8 @@ defmodule Parcelmagic.ShipmentController do
           case Repo.update(changeset) do
             {:ok, shipment} ->
               rates = Enum.map(response["rates"], fn(x)-> Map.put(x, "easypost_id", x["id"]) end)
-                      |> Enum.map(fn(x)-> Map.put(x, "shipment_easypost_id", x["shipment_id"])
-                      |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id)
+                      |> Enum.map(fn(x)-> Map.put(x, "shipment_easypost_id", x["shipment_id"]) end)
+                      |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id) end)
                       |> Enum.map(fn({k,v})-> {String.to_atom(k), v} end)                    
               render(conn, "quotes.json", rates: rates)
             {:error, changeset} ->
@@ -78,7 +78,7 @@ defmodule Parcelmagic.ShipmentController do
 
   def buy(conn, %{"rate" => rate_params}) do
     shipment = Repo.get!(Shipment, rate_params["shipment_id"])
-    case buy_shipment(rate["easypost_shipment_id"], %{id: rate_params["id"]}) do
+    case buy_shipment(rate_params["easypost_shipment_id"], %{id: rate_params["id"]}) do
       {:ok, response} ->
         shipment_params = %{ 
           "tracking_code" => response["tracking_code"], 
@@ -128,7 +128,7 @@ defmodule Parcelmagic.ShipmentController do
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    shipment = Repo.delete!(shipment)
+    Repo.delete!(shipment)
 
     send_resp(conn, :no_content, "")
   end

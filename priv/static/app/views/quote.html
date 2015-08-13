@@ -1,0 +1,233 @@
+<section>
+    <div class="row">
+      <h2 data-bind='text: displayName'></h2>
+    </div>   
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="col s4">
+            <div class="row compact">
+              <div class="col s6">
+                <blockquote>
+                  <h4>From</h4>
+                </blockquote>
+              </div>
+              <div class="col s6">
+                <div class="switch">
+                  <label>
+                    Existing
+                    <input type="checkbox" data-bind="checked: FromNew">
+                    <span class="lever"></span>
+                    New
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" data-bind="visible: FromNew() === false">          
+              <div class="input-field col s12">                
+                <input id="from-namesearch" type="text" class="validate"></input>
+                <label for="from-namesearch">Find by name</label>
+              </div>
+            </div>
+
+            <div data-bind="visible: FromNew">
+              <div class="row compact" >          
+                <div class="input-field col s6">                
+                  <input id="from-name" type="text" class="validate"></input>
+                  <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="from-company" type="text" class="validate"></input>
+                  <label for="company">Company</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="from-street1" type="text" class="validate"></input>
+                  <label for="street">Street Address 1</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="from-street2" type="text" class="validate"></input>
+                  <label for="street2">Street Address 2</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="from-city" type="text" class="validate"></input>
+                  <label for="city">City</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="from-state" type="text" class="validate"></input>
+                  <label for="state">State/Province</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="from-zip" type="text" class="validate"></input>
+                  <label for="zip">Zip/Postal Code</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="from-country" type="text" class="validate"></input>
+                  <label for="country">Country</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="from-phone" type="text" class="validate"></input>
+                  <label for="phone">Phone Number</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="from-email" type="text" class="validate"></input>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s4">
+            <div class="row compact">
+              <div class="col s6">
+                <blockquote>
+                  <h4>To</h4>
+                </blockquote>
+              </div>
+              <div class="col s6">
+                <div class="switch">
+                  <label>
+                    Existing
+                    <input type="checkbox" data-bind="checked: ToNew">
+                    <span class="lever"></span>
+                    New
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" data-bind="visible: ToNew() === false">          
+              <div class="input-field col s12">                
+                <input id="to-namesearch" type="text" class="validate"></input>
+                <label for="to-namesearch">Find by name</label>
+              </div>
+            </div>
+
+            <div data-bind="visible: ToNew">
+              <div class="row compact" >          
+                <div class="input-field col s6">                
+                  <input id="to-name" type="text" class="validate"></input>
+                  <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="to-company" type="text" class="validate"></input>
+                  <label for="company">Company</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="to-street1" type="text" class="validate"></input>
+                  <label for="street">Street Address 1</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="to-street2" type="text" class="validate"></input>
+                  <label for="street2">Street Address 2</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="to-city" type="text" class="validate"></input>
+                  <label for="city">City</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="to-state" type="text" class="validate"></input>
+                  <label for="state">State/Province</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="to-zip" type="text" class="validate"></input>
+                  <label for="zip">Zip/Postal Code</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="to-country" type="text" class="validate"></input>
+                  <label for="country">Country</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s6">
+                  <input id="to-phone" type="text" class="validate"></input>
+                  <label for="phone">Phone Number</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="to-email" type="text" class="validate"></input>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s4">
+            <div class="row compact">
+              <div class="col s6">
+                <blockquote>
+                  <h4>Parcel</h4>
+                </blockquote>
+              </div>
+              <div class="col s6">
+                <div class="switch">
+                  <label>
+                    Existing
+                    <input type="checkbox" data-bind="checked: ParcelNew">
+                    <span class="lever"></span>
+                    New
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" data-bind="visible: ParcelNew() === false">          
+              <div class="input-field col s12">                
+                <input id="package-namesearch" type="text" class="validate"></input>
+                <label for="package-namesearch">Find by name</label>
+              </div>
+            </div>
+
+            <div data-bind="visible: ParcelNew">
+              <div class="row compact">          
+                <div class="input-field col s12">                
+                  <input id="parcel-length" type="text" class="validate"></input>
+                  <label for="parcel-length">Length (inches)</label>
+                </div>
+              </div> 
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="parcel-width" type="text" class="validate"></input>
+                  <label for="parcel-width">Width (inches)</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="parcel-height" type="text" class="validate"></input>
+                  <label for="parcel-height">Height (inches)</label>
+                </div>
+              </div>
+              <div class="row compact">
+                <div class="input-field col s12">
+                  <input id="parcel-weight" type="text" class="validate"></input>
+                  <label for="parcel-weight">Weight (ounces)</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <a class="waves-effect waves-light btn-large right"><i class="material-icons right">send</i>Go!</a>
+        </div>
+      </form>
+    </div>
+        
+            
+</section>

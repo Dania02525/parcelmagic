@@ -1,0 +1,18 @@
+﻿<div>
+  
+    <nav>
+      <div class="nav-wrapper">
+        <div class="container">
+          <a href="#" class="brand-logo">
+            <i class="fa fa-home"></i>
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down" data-bind="foreach: router.navigationModel">
+            <li data-bind="css: { active: isActive }"><a data-bind="attr: { href: hash }, text: title"></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-host" data-bind="router: { transition:'entrance' }"></div>            
+            
+</div>
