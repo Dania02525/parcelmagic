@@ -9,3 +9,4 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+Parcelmagic.Repo.insert!(%Parcelmagic.User{email: "example@example.com", password: Comeonin.Bcrypt.hashpwsalt("password")})
