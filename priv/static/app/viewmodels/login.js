@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/dialog', 'knockout', 'materialize'], function (http, dialog, ko, materialize) {
+define(['plugins/http', 'plugins/dialog', 'knockout', 'materialize', 'session'], function (http, dialog, ko, materialize, session) {
 
   var Login = function() {
     this.email = ko.observable('');
@@ -12,7 +12,7 @@ define(['plugins/http', 'plugins/dialog', 'knockout', 'materialize'], function (
     var self = this;
     http.post('/login', {email: this.email, password: this.password}).then(function(response) {
         self.loading(false);
-          //update the session here
+          session.token(response.token)
           dialog.close(self);
       }).fail( function() {
           self.loading(false);

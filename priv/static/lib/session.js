@@ -1,6 +1,6 @@
-define(['knockout', 'plugins/http'], function (ko, http) {
+define(['knockout'], function (ko) {
 
   return {
-
+    token: ko.observable()
   };
 });

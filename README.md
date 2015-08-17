@@ -19,4 +19,6 @@ This app requires phoenix 15.0, and not 16+, since views make use of render_one 
 
 ###Start application
 
-Now you can visit [`localhost:4000/app`](http://localhost:4000/app) from your browser.
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+Login with credentials from the seeds file (default is example@example.com, password: password)

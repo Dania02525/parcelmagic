@@ -8,9 +8,11 @@
     var self = this;
     self.displayName = 'Welcome to Parcelmagic';
     self.activate = function () {
-      login.show();
+      if( session.token() == null){
+          login.show();
+        }
     }
-    self.attached = function(view) {
+    self.attached = function(view) {     
         $(document).ready(function() {
           $('select').material_select();
         });

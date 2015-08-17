@@ -1,4 +1,4 @@
-define(['plugins/http', 'durandal/app', 'knockout', 'session'], function (http, app, ko, session) {
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session'], function (http, router, app, ko, session) {
     //Note: This module exports an object.
     //That means that every module that "requires" it will get the same object instance.
     //If you wish to be able to create multiple instances, instead export a function.
@@ -10,13 +10,24 @@ define(['plugins/http', 'durandal/app', 'knockout', 'session'], function (http, 
     self.loading = ko.observable(true);
     self.table = ko.observable(false);
     self.errormessage = ko.observable(false);
-    self.activate = function () {
-
+    self.shipments = ko.observable([]);
+    self.canActivate = function () {
+      if( session.token() == null){
+        router.navigate('#');
+        return false;
+      }
+      else{
+        return true;
+      }
     }
     self.attached = function(view) {
-      var headers = {contentType: "application/json", token: session.token}
+      self.loading(true);
+      self.table(false);
+      self.errormessage(false);
+      self.shipments([]);
+      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
       http.get('/api/shipments', {}, headers).then(function(response) {
-          self.shipments(response);
+          self.shipments(response.data);
           self.loading(false);
           self.table(true);
       }).fail( function() {

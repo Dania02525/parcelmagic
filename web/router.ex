@@ -20,7 +20,7 @@ defmodule Parcelmagic.Router do
                        json_decoder: Poison
   end
 
-  scope "/app", Parcelmagic do
+  scope "/", Parcelmagic do
     pipe_through :browser # Use the default browser stack
 
     get "/", AppController, :index

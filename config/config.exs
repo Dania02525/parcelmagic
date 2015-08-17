@@ -25,4 +25,4 @@ config :logger, :console,
 import_config "#{Mix.env}.exs"
 
 config :joken,
-  config_module: My.Config.Module
+  config_module: Joken.Config.Api
