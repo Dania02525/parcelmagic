@@ -18,7 +18,7 @@ defmodule Joken.Config.Api do
   end
 
   def claim(:exp, payload) do
-    Joken.Helpers.get_current_time() + 300
+    Joken.Helpers.get_current_time() + 10000
   end
 
   def claim(_, _) do

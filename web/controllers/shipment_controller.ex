@@ -23,9 +23,8 @@ defmodule Parcelmagic.ShipmentController do
           {:ok, shipment} ->
             rates = Enum.map(response["rates"], fn(x)-> Map.put(x, "easypost_id", x["id"]) end)
                     |> Enum.map(fn(x)-> Map.put(x, "shipment_easypost_id", x["shipment_id"]) end)
-                    |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id) end)
-                    |> Enum.map(fn({k,v})-> {String.to_atom(k), v} end)                    
-            render(conn, "quotes.json", rates: rates)
+                    |> Enum.map(fn(x)-> Map.put(x, "shipment_id", shipment.id) end)                   
+            json conn |> put_status(200), %{"data" => rates}
           {:error, changeset} ->
             conn
             |> put_status(:unprocessable_entity)
