@@ -2,7 +2,7 @@
     <div class="row">
       <h2 data-bind='text: displayName'></h2>
     </div>   
-    <div class="row">
+    <div class="row" data-bind="visible: editing">
       <form class="col s12">
         <div class="row">
           <div class="col s4">
@@ -229,22 +229,72 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="preloader-wrapper big active" data-bind="visible: loading">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-          </div>
-          <a class="waves-effect waves-light btn-large right" data-bind="visible: !loading(), click: getQuotes"><i class="material-icons right">send</i>Go!</a>
+        <div class="row">        
+          <a class="waves-effect waves-light btn-large right" data-bind="click: getQuotes"><i class="material-icons right">send</i>Go!</a>
         </div>
       </form>
     </div>
+
+    <div class="row" data-bind="visible: loading">
+      <div class="splash">
+        <div class="message">
+            Fetching quotes...
+        </div>
+        <div class="preloader-wrapper big active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" data-bind="visible: quoted">
+      <div class="row">
+        <div class="col s4">
+          <div class="row compact">
+            <blockquote>
+              <h4>From</h4>
+            </blockquote>
+          </div>
+          <div class="row compact">
+            from address
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="row compact">
+            <blockquote>
+              <h4>To</h4>
+            </blockquote>
+          </div>
+          <div class="row compact">
+            to address
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="row compact">
+            <blockquote>
+              <h4>Package</h4>
+            </blockquote>
+          </div>
+          <div class="row compact">
+            package
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- ko foreach: { data: quotes, as: 'quote' } -->
+          <div data-bind="compose: { view:'ratecard.html' }"></div>
+        <!-- /ko -->
+      </div>
+    </div>
+
+
         
             
 </section>

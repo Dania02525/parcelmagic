@@ -1,0 +1,17 @@
+<div class="col s3">
+  <div class="card-panel indigo lighten-2">
+    <div class="row">      
+      <img data-bind="attr: { src: quote.carrierLogo }">      
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <span class="white-text">Service: <span data-bind="text: quote.service"></span></span><br>
+        <span class="white-text">Est Delivery Days: <span data-bind="text: quote.est_delivery_days"></span></span><br>
+        <h5 class="white-text">Rate: $<span data-bind="text: quote.rate"></span></h5>
+      </div>
+      <div class="col s6">
+        <a class="btn-large red lighten-2 right" data-bind="click: quote.buy">Buy it!</a>
+      </div>
+    </div>  
+  </div>
+</div>

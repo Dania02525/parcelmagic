@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session', 'materialize'], function (http, router, app, ko, session, materialize) {
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session', 'materialize', 'images'], function (http, router, app, ko, session, materialize, images) {
     //Note: This module exports an object.
     //That means that every module that "requires" it will get the same object instance.
     //If you wish to be able to create multiple instances, instead export a function.
@@ -29,26 +29,49 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session',
     self.easypost_id = ko.observable(data.easypost_id);
   }
 
+  function Rate(data){
+    var self= this;
+    self.rate = ko.observable(data.rate);
+    self.service = ko.observable(data.service);
+    self.est_delivery_days = ko.observable(data.est_delivery_days);
+    self.carrier = ko.observable(data.carrier);
+    self.carrierLogo = ko.computed(function() {
+      return images[self.carrier()];
+    });
+    self.buy = function(){
+      console.log(this);
+    }
+  }
+
   function vm(){
     var self = this;
     self.displayName = 'Shipping Quote';
     self.FromNew = ko.observable(false);
     self.ToNew = ko.observable(false);
     self.ParcelNew = ko.observable(false);
+    self.editing = ko.observable(true);
     self.loading = ko.observable(false);
-    self.quotes = ko.observable([]);
+    self.quoted = ko.observable(false);
+    self.quotes = ko.observableArray();
     self.getQuotes = function () {
       self.quotes([]);
+      self.editing(false);
       self.loading(true);
       var data = {shipment:{from_address: self.From, to_address: self.To, parcel: self.Parcel}};
       var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
       http.post('/api/shipments', data, headers).then(function(response) {
-          self.quotes(response.data);
           self.loading(false);
-          //self.table(true);
+          self.quoted(true);
+          var count = response.data.length;
+          for(i=0;i<count;i++){
+            var rate = new Rate(response.data[i]);
+            self.quotes.push(rate);
+          } 
+          console.log(self.quotes());      
       }).fail( function() {
           self.loading(false);
-          //self.errormessage(true);
+          self.editing(true);
+          //some error here?
       });
     }
     self.canActivate = function () {
