@@ -5,10 +5,12 @@
         'plugins' : '../lib/durandal/js/plugins',
         'transitions' : '../lib/durandal/js/transitions',
         'knockout': '../lib/knockout/knockout-3.3.0',
+        'knockout.validation': '../lib/knockout/knockout.validation',
         'jquery': '../lib/jquery/jquery-1.9.1',
         'materialize': '../lib/materialize/js/materialize.amd',
         'session': '../lib/session',
-        'images': '../lib/images'
+        'images': '../lib/images',
+        'data': '../lib/data',
         
     },
     shim: {
@@ -17,6 +19,9 @@
         },
         'materialize': {
             deps: ['jquery']
+        },
+        'knockout.validation': {
+            deps: ['knockout']
         }
     }
 });

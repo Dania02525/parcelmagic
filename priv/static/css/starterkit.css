@@ -27,6 +27,16 @@ main {
 .switch {
     margin-top: 1.5rem;
 }
+.validationMessage {
+    color:red;
+}
+.suggestions {
+    width: 100%; 
+    position: absolute; 
+    left: 0px; 
+    opacity: 1; 
+    display: block;
+}
 
 .splash .message {
     font-size: 5em;

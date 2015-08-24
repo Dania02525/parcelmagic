@@ -26,61 +26,65 @@
 
             <div class="row" data-bind="visible: FromNew() === false">          
               <div class="input-field col s12">                
-                <input id="from-namesearch" type="text" class="validate"></input>
-                <label for="from-namesearch">Find by name</label>
+                <input id="to-namesearch" type="text" class="validate" data-bind="value: From.searchterm, valueUpdate: 'afterkeydown'"></input>
+                <label for="to-namesearch">Find by name</label>    
+                <div class="select-dropdown" data-bind="visible: From.suggestions().length">
+                  <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: From.suggestions">
+                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             <div data-bind="visible: FromNew">
               <div class="row compact" >          
                 <div class="input-field col s6">                
-                  <input id="from-name" type="text" class="validate" data-bind="value: From.name"></input>
+                  <input id="from-name" type="text" class="active"  data-error="Must include name or company" data-bind="value: From.name"></input>
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="from-company" type="text" class="validate" data-bind="value: From.company"></input>
+                  <input id="from-company" type="text" class="active" data-error="Must include name or company" data-bind="value: From.company"></input>
                   <label for="company">Company</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="from-street1" type="text" class="validate" data-bind="value: From.street1"></input>
+                  <input id="from-street1" type="text" class="active" data-error="Required" data-bind="value: From.street1"></input>
                   <label for="street">Street Address 1</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="from-street2" type="text" class="validate" data-bind="value: From.street2"></input>
+                  <input id="from-street2" type="text" class="active" data-bind="value: From.street2"></input>
                   <label for="street2">Street Address 2</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="from-city" type="text" class="validate" data-bind="value: From.city"></input>
+                  <input id="from-city" type="text" class="active" data-bind="value: From.city"></input>
                   <label for="city">City</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="from-state" type="text" class="validate" data-bind="value: From.state"></input>
+                  <input id="from-state" type="text" class="active" data-bind="value: From.state"></input>
                   <label for="state">State/Province</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="from-zip" type="text" class="validate" data-bind="value: From.zip"></input>
+                  <input id="from-zip" type="text" class="active" data-bind="value: From.zip"></input>
                   <label for="zip">Zip/Postal Code</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="from-country" type="text" class="validate" data-bind="value: From.country"></input>
-                  <label for="country">Country</label>
+                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: From.country, optionsCaption: 'Select country...'"></select>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="from-phone" type="text" class="validate" data-bind="value: From.phone"></input>
+                  <input id="from-phone" type="text" class="active" data-bind="value: From.phone"></input>
                   <label for="phone">Phone Number</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="from-email" type="text" class="validate" data-bind="value: From.email"></input>
+                  <input id="from-email" type="text" class="active" data-bind="value: From.email"></input>
                   <label for="email">Email</label>
                 </div>
               </div>
@@ -108,61 +112,65 @@
 
             <div class="row" data-bind="visible: ToNew() === false">          
               <div class="input-field col s12">                
-                <input id="to-namesearch" type="text" class="validate" ></input>
-                <label for="to-namesearch">Find by name</label>
+                <input id="to-namesearch" type="text" data-bind="value: To.searchterm, valueUpdate: 'afterkeydown'" ></input>
+                <label for="to-namesearch">Find by reference</label>  
+                <div class="select-dropdown" data-bind="visible: To.suggestions().length">
+                  <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: To.suggestions">
+                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                  </ul>
+                </div>             
               </div>
             </div>
 
             <div data-bind="visible: ToNew">
               <div class="row compact" >          
                 <div class="input-field col s6">                
-                  <input id="to-name" type="text" class="validate" data-bind="value: To.name"></input>
+                  <input id="to-name" type="text" class="active" data-bind="value: To.name"></input>
                   <label for="name">Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="to-company" type="text" class="validate" data-bind="value: To.company"></input>
+                  <input id="to-company" type="text" class="active" data-bind="value: To.company"></input>
                   <label for="company">Company</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="to-street1" type="text" class="validate" data-bind="value: To.street1"></input>
+                  <input id="to-street1" type="text" class="active" data-bind="value: To.street1"></input>
                   <label for="street">Street Address 1</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="to-street2" type="text" class="validate" data-bind="value: To.street2"></input>
+                  <input id="to-street2" type="text" class="active" data-bind="value: To.street2"></input>
                   <label for="street2">Street Address 2</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="to-city" type="text" class="validate" data-bind="value: To.city"></input>
+                  <input id="to-city" type="text" class="active" data-bind="value: To.city"></input>
                   <label for="city">City</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="to-state" type="text" class="validate" data-bind="value: To.state"></input>
+                  <input id="to-state" type="text" class="active" data-bind="value: To.state"></input>
                   <label for="state">State/Province</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="to-zip" type="text" class="validate" data-bind="value: To.zip"></input>
+                  <input id="to-zip" type="text" class="active" data-bind="value: To.zip"></input>
                   <label for="zip">Zip/Postal Code</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="to-country" type="text" class="validate" data-bind="value: To.country"></input>
-                  <label for="country">Country</label>
+                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: From.country, optionsCaption: 'Select country...'"></select>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s6">
-                  <input id="to-phone" type="text" class="validate" data-bind="value: To.phone"></input>
+                  <input id="to-phone" type="text" class="active" data-bind="value: To.phone"></input>
                   <label for="phone">Phone Number</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="to-email" type="text" class="validate" data-bind="value: To.email"></input>
+                  <input id="to-email" type="text" class="active" data-bind="value: To.email"></input>
                   <label for="email">Email</label>
                 </div>
               </div>
@@ -190,39 +198,44 @@
 
             <div class="row" data-bind="visible: ParcelNew() === false">          
               <div class="input-field col s12">                
-                <input id="package-namesearch" type="text" class="validate"></input>
-                <label for="package-namesearch">Find by name</label>
+                <input id="package-namesearch" type="text" data-bind="value: Parcel.searchterm, valueUpdate: 'afterkeydown'"></input>
+                <label for="package-namesearch">Find by reference</label>
+                <div class="select-dropdown" data-bind="visible: Parcel.suggestions().length">
+                  <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: Parcel.suggestions">
+                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                  </ul>
+                </div>
               </div>
             </div>
 
             <div data-bind="visible: ParcelNew">
               <div class="row compact">          
                 <div class="input-field col s12">                
-                  <input id="parcel-name" type="text" class="validate" data-bind="value: Parcel.name"></input>
+                  <input id="parcel-name" type="text" class="active" data-bind="value: Parcel.name"></input>
                   <label for="parcel-name">Reference/Name</label>
                 </div>
               </div>
               <div class="row compact">          
                 <div class="input-field col s12">                
-                  <input id="parcel-length" type="text" class="validate" data-bind="value: Parcel.length"></input>
+                  <input id="parcel-length" type="text" class="active" data-bind="value: Parcel.length"></input>
                   <label for="parcel-length">Length (inches)</label>
                 </div>
               </div> 
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="parcel-width" type="text" class="validate" data-bind="value: Parcel.width"></input>
+                  <input id="parcel-width" type="text" class="active" data-bind="value: Parcel.width"></input>
                   <label for="parcel-width">Width (inches)</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="parcel-height" type="text" class="validate" data-bind="value: Parcel.height"></input>
+                  <input id="parcel-height" type="text" class="active" data-bind="value: Parcel.height"></input>
                   <label for="parcel-height">Height (inches)</label>
                 </div>
               </div>
               <div class="row compact">
                 <div class="input-field col s12">
-                  <input id="parcel-weight" type="text" class="validate" data-bind="value: Parcel.weight"></input>
+                  <input id="parcel-weight" type="text" class="active" data-bind="value: Parcel.weight"></input>
                   <label for="parcel-weight">Weight (ounces)</label>
                 </div>
               </div>
