@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.validation', 'session', 'materialize', 'images', 'data'], function (http, router, app, ko, validation, session, materialize, images, data) {
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.validation', 'session', 'materialize', 'toastr', 'data'], function (http, router, app, ko, validation, session, materialize, toastr, data) {
     //Note: This module exports an object.
     //That means that every module that "requires" it will get the same object instance.
     //If you wish to be able to create multiple instances, instead export a function.
@@ -33,7 +33,8 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);
     self.select = function(selection) {
-      self.suggestions([]);     
+      self.suggestions([]);  
+      self.reference(selection.reference);   
       self.name(selection.name);
       self.company(selection.company);
       self.street1(selection.street1);
@@ -50,7 +51,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
       var query = self.searchterm();
       if(self.searchterm()){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
-        http.get('api/addresses', "query=" + query, headers).then(function(response) {
+        http.get('api/addresses', "query=" + query + "&limit=6", headers).then(function(response) {
           if( response.length > 0 ){
             self.suggestions(response);
             setTimeout(function() {
@@ -70,6 +71,23 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
 
   function Parcel(data){
     var self = this;
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-full-width",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    };
     self.reference = ko.observable(data.reference).extend({ required: true});
     self.length = ko.observable(data.length).extend({ number: true});
     self.width = ko.observable(data.width).extend({ number: true});
@@ -78,11 +96,20 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
     self.easypost_id = ko.observable(data.easypost_id);
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);
+    self.select = function(selection) {
+      self.suggestions([]);
+      self.reference(selection.reference);     
+      self.length(selection.length);
+      self.width(selection.width);
+      self.height(selection.height);
+      self.weight(selection.weight);
+      self.easypost_id(selection.easypost_id);
+    }
     ko.computed(function(){
       var query = self.searchterm();
       if(self.searchterm()){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
-        http.get('api/parcels', "query=" + query, headers).then(function(response) {
+        http.get('api/parcels', "query=" + query + "&limit=6", headers).then(function(response) {
           if( response.length > 0 ){
             self.suggestions(response);
             setTimeout(function() {
@@ -107,10 +134,10 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
     self.est_delivery_days = ko.observable(data.est_delivery_days);
     self.carrier = ko.observable(data.carrier);
     self.carrierLogo = ko.computed(function() {
-      return images[self.carrier()];
+      return data.images[self.carrier()];
     });
-    self.buy = function(){
-      console.log(this);
+    self.buy = function(rate){
+      console.log(rate);
     }
   }
 
@@ -140,30 +167,30 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'knockout.
       }
     }
     self.getQuotes = function () {
-      console.log('vm valid? ' + self.isValid());
-      console.log('from country: ' + self.From.country());
-      /*
-      self.quotes([]);
-      self.editing(false);
-      self.loading(true);
-      
-      var data = {shipment:{from_address: self.From, to_address: self.To, parcel: self.Parcel}};
-      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
-      http.post('/api/shipments', data, headers).then(function(response) {
-          self.loading(false);
-          self.quoted(true);
-          var count = response.data.length;
-          for(i=0;i<count;i++){
-            var rate = new Rate(response.data[i]);
-            self.quotes.push(rate);
-          } 
-          console.log(self.quotes());      
-      }).fail( function() {
-          self.loading(false);
-          self.editing(true);
-          //some error here?
-      });
-    */
+      if( self.isValid(self)){
+        self.quotes([]);
+        self.editing(false);
+        self.loading(true);   
+        var data = {shipment:{from_address: self.From, to_address: self.To, parcel: self.Parcel}};
+        var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+        http.post('/api/shipments', data, headers).then(function(response) {
+            self.loading(false);
+            self.quoted(true);
+            var count = response.data.length;
+            for(i=0;i<count;i++){
+              var rate = new Rate(response.data[i]);
+              self.quotes.push(rate);
+            } 
+            console.log(self.quotes());      
+        }).fail( function() {
+            self.loading(false);
+            self.editing(true);
+            toastr["error"]("An error occurred, please check fields for accuracy");
+        });
+      }  
+      else {
+        toastr["error"]("Please check required parameters");
+      }  
     }
     self.canActivate = function () {
       if( session.token() == null){

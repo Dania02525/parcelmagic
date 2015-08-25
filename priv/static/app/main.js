@@ -11,6 +11,7 @@
         'session': '../lib/session',
         'images': '../lib/images',
         'data': '../lib/data',
+        'toastr': '../lib/toastr/toastr.min'
         
     },
     shim: {
@@ -18,6 +19,9 @@
             exports: '$'
         },
         'materialize': {
+            deps: ['jquery']
+        },
+        'toastr': {
             deps: ['jquery']
         },
         'knockout.validation': {
@@ -31,7 +35,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator'],  function (s
     system.debug(true);
     //>>excludeEnd("build");
 
-    app.title = 'Durandal Starter Kit';
+    app.title = 'Parcelmagic';
 
     app.configurePlugins({
         router:true,

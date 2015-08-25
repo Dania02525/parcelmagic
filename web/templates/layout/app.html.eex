@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="<%= static_path(@conn, "/css/ie10mobile.css") %>" />
         <link rel="stylesheet" href="<%= static_path(@conn, "/lib/durandal/css/durandal.css") %>" />
         <link rel="stylesheet" href="<%= static_path(@conn, "/css/starterkit.css") %>" />
+        <link rel="stylesheet" href="<%= static_path(@conn, "/lib/toastr/toastr.min.css") %>" />
         
         <script type="text/javascript">
             if (navigator.userAgent.match(/IEMobile\/10\.0/)) {

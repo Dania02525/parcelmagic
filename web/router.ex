@@ -37,13 +37,12 @@ defmodule Parcelmagic.Router do
 
     resources "/addresses", AddressController
     resources "/carrier_accounts", CarrierAccountController
-    resources "/customs_infos", CustomsInfoController
-    resources "/customs_items", CustomsItemController
     resources "/parcels", ParcelController
-    resources "/pickups", PickupController
-    resources "/shipments", ShipmentController
+    post "shipments/quote", ShipmentController, :quote
     post "shipments/buy", ShipmentController, :buy
     get "shipments/track/:id", ShipmentController, :track
+    get "shipments", ShipmentController, :index
+    get "shipments/:id", ShipmentController, :show
     resources "/users", UserController
   end
 end

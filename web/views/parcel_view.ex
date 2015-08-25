@@ -12,6 +12,7 @@ defmodule Parcelmagic.ParcelView do
   def render("parcel.json", %{parcel: parcel}) do
     %{
       id: parcel.id,
+      reference: parcel.reference,
       length: parcel.length,
       width: parcel.width,
       height: parcel.height,

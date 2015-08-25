@@ -2,6 +2,7 @@ defmodule Parcelmagic.Parcel do
   use Parcelmagic.Web, :model
 
   schema "parcels" do
+    field :reference, :string
     field :length, :float
     field :width, :float
     field :height, :float
@@ -11,7 +12,7 @@ defmodule Parcelmagic.Parcel do
     timestamps
   end
 
-  @required_fields ~w(length width height weight easypost_id)
+  @required_fields ~w(reference length width height weight easypost_id)
   @optional_fields ~w()
 
   @doc """

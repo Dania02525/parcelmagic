@@ -13,6 +13,7 @@ defmodule Parcelmagic.AddressView do
     %{
       id: address.id,
       easypost_id: address.easypost_id,
+      reference: address.reference,
       name: address.name,
       company: address.company,
       street1: address.street1,

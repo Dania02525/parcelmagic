@@ -2,6 +2,7 @@ defmodule Parcelmagic.Address do
   use Parcelmagic.Web, :model
 
   schema "addresses" do
+    field :reference, :string
     field :name, :string
     field :company, :string
     field :street1, :string
@@ -17,7 +18,7 @@ defmodule Parcelmagic.Address do
     timestamps
   end
 
-  @required_fields ~w(street1 city state zip country phone easypost_id)
+  @required_fields ~w(reference street1 city state zip country phone easypost_id)
   @optional_fields ~w(street2 email name company)
 
   @doc """

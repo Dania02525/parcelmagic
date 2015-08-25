@@ -3,6 +3,7 @@ defmodule Parcelmagic.Repo.Migrations.CreateAddress do
 
   def change do
     create table(:addresses) do
+      add :reference, :string
       add :name, :string
       add :company, :string
       add :street1, :string

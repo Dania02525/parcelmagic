@@ -19,7 +19,7 @@ defmodule Parcelmagic.Shipment do
   end
 
   @required_fields ~w(to_address from_address parcel easypost_id)
-  @optional_fields ~w(customs_info insurance reference)
+  @optional_fields ~w(customs_info insurance reference tracking_code carrier rate service label_url)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -32,8 +32,4 @@ defmodule Parcelmagic.Shipment do
     |> cast(params, @required_fields, @optional_fields)
   end
 
-  def buy(model, params \\ :empty) do
-    model
-    |> cast(params, ~w(tracking_code carrier rate service label_url), ~w())
-  end
 end

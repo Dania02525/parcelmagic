@@ -2,7 +2,7 @@ defmodule Parcelmagic.ParcelControllerTest do
   use Parcelmagic.ConnCase
 
   alias Parcelmagic.Parcel
-  @valid_attrs %{easypost_id: "some content", height: "120.5", length: "120.5", weight: "120.5", width: "120.5"}
+  @valid_attrs %{reference: "some content", easypost_id: "some content", height: "120.5", length: "120.5", weight: "120.5", width: "120.5"}
   @invalid_attrs %{}
 
   setup do

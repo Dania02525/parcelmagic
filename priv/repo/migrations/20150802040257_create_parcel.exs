@@ -3,6 +3,7 @@ defmodule Parcelmagic.Repo.Migrations.CreateParcel do
 
   def change do
     create table(:parcels) do
+      add :reference, :string
       add :length, :float
       add :width, :float
       add :height, :float
