@@ -5,7 +5,7 @@
     <div class="row" data-bind="visible: editing">
       <form class="col s12">
         <div class="row">
-          <div class="col s4">
+          <div class="col l4 m12">
             <div class="row compact">
               <div class="col s6">
                 <blockquote>
@@ -30,13 +30,19 @@
                 <label for="to-namesearch">Find by name</label>    
                 <div class="select-dropdown" data-bind="visible: From.suggestions().length">
                   <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: From.suggestions">
-                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                    <li data-bind="click: $parent.From.select"><span data-bind="text: reference"></span></li>                 
                   </ul>
                 </div>
               </div>
             </div>
 
             <div data-bind="visible: FromNew">
+              <div class="row compact">          
+                <div class="input-field col s12">                
+                  <input id="from-reference" type="text" class="active" data-bind="value: From.reference"></input>
+                  <label for="from-reference">Enter a reference to save this address</label>
+                </div>
+              </div>
               <div class="row compact" >          
                 <div class="input-field col s6">                
                   <input id="from-name" type="text" class="active"  data-error="Must include name or company" data-bind="value: From.name"></input>
@@ -91,7 +97,7 @@
             </div>
           </div>
 
-          <div class="col s4">
+          <div class="col l4 m12">
             <div class="row compact">
               <div class="col s6">
                 <blockquote>
@@ -116,13 +122,19 @@
                 <label for="to-namesearch">Find by reference</label>  
                 <div class="select-dropdown" data-bind="visible: To.suggestions().length">
                   <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: To.suggestions">
-                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                    <li data-bind="click: $parent.To.select"><span data-bind="text: reference"></span></li>
                   </ul>
                 </div>             
               </div>
             </div>
 
             <div data-bind="visible: ToNew">
+              <div class="row compact">          
+                <div class="input-field col s12">                
+                  <input id="to-reference" type="text" class="active" data-bind="value: To.reference"></input>
+                  <label for="to-reference">Enter a reference to save this address</label>
+                </div>
+              </div>
               <div class="row compact" >          
                 <div class="input-field col s6">                
                   <input id="to-name" type="text" class="active" data-bind="value: To.name"></input>
@@ -161,7 +173,7 @@
                   <label for="zip">Zip/Postal Code</label>
                 </div>
                 <div class="input-field col s6">
-                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: From.country, optionsCaption: 'Select country...'"></select>
+                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: To.country, optionsCaption: 'Select country...'"></select>
                 </div>
               </div>
               <div class="row compact">
@@ -177,7 +189,7 @@
             </div>
           </div>
 
-          <div class="col s4">
+          <div class="col l4 m12">
             <div class="row compact">
               <div class="col s6">
                 <blockquote>
@@ -202,7 +214,7 @@
                 <label for="package-namesearch">Find by reference</label>
                 <div class="select-dropdown" data-bind="visible: Parcel.suggestions().length">
                   <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: Parcel.suggestions">
-                    <li data-bind="click: $parent.select"><span data-bind="text: reference"></span></li>
+                    <li data-bind="click: $parent.Parcel.select"><span data-bind="text: reference"></span></li>
                   </ul>
                 </div>
               </div>
@@ -211,8 +223,8 @@
             <div data-bind="visible: ParcelNew">
               <div class="row compact">          
                 <div class="input-field col s12">                
-                  <input id="parcel-name" type="text" class="active" data-bind="value: Parcel.name"></input>
-                  <label for="parcel-name">Reference/Name</label>
+                  <input id="parcel-name" type="text" class="active" data-bind="value: Parcel.reference"></input>
+                  <label for="parcel-name">Enter a reference to save this parcel</label>
                 </div>
               </div>
               <div class="row compact">          
@@ -242,26 +254,22 @@
             </div>
           </div>
         </div>
-        <div class="row">        
+        <div class="row">       
           <a class="waves-effect waves-light btn-large right" data-bind="click: getQuotes"><i class="material-icons right">send</i>Go!</a>
         </div>
       </form>
     </div>
 
     <div class="row" data-bind="visible: loading">
-      <div class="splash">
-        <div class="message">
-            Fetching quotes...
-        </div>
-        <div class="preloader-wrapper big active">
-          <div class="spinner-layer spinner-blue-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
+      <h3 data-bind="text: loadingMessage"></h3>
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
           </div>
         </div>
       </div>
@@ -269,34 +277,37 @@
 
     <div class="row" data-bind="visible: quoted">
       <div class="row">
-        <div class="col s4">
+        <div class="col l4 m12">
           <div class="row compact">
             <blockquote>
               <h4>From</h4>
             </blockquote>
           </div>
           <div class="row compact">
-            from address
+            <p data-bind="html: From.asText()"></p>
+            <a class="waves-effect waves-light btn" data-bind="click: editFields">Change</a>
           </div>
         </div>
-        <div class="col s4">
+        <div class="col l4 m12">
           <div class="row compact">
             <blockquote>
               <h4>To</h4>
             </blockquote>
           </div>
           <div class="row compact">
-            to address
+            <p data-bind="html: To.asText"></p>
+            <a class="waves-effect waves-light btn" data-bind="click: editFields">Change</a>
           </div>
         </div>
-        <div class="col s4">
+        <div class="col l4 m12">
           <div class="row compact">
             <blockquote>
               <h4>Package</h4>
             </blockquote>
           </div>
           <div class="row compact">
-            package
+            <p data-bind="html: Parcel.asText"></p>
+            <a class="waves-effect waves-light btn" data-bind="click: editFields">Change</a>
           </div>
         </div>
       </div>

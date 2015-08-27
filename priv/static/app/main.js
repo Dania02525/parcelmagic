@@ -10,7 +10,7 @@
         'materialize': '../lib/materialize/js/materialize.amd',
         'session': '../lib/session',
         'images': '../lib/images',
-        'data': '../lib/data',
+        'info': '../lib/data',
         'toastr': '../lib/toastr/toastr.min'
         
     },

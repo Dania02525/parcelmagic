@@ -36,27 +36,33 @@ defmodule Parcelmagic.ShipmentController do
 
   #this route buys a shipment rate
   def buy(conn, %{"rate" => rate_params, "shipment" => shipment}) do
-    case buy_shipment(rate_params["shipment_id"], %{id: rate_params["id"]}) do
+    case buy_shipment(rate_params["shipment_id"], %{"id" => rate_params["id"]}) do
       {:ok, response} ->
-        shipment_params = shipment 
-          |> Map.put("tracking_code", response["tracking_code"])
-          |> Map.put("carrier", response["selected_rate"]["carrier"])
-          |> Map.put("rate", response["selected_rate"]["rate"])
-          |> Map.put("service", response["selected_rate"]["service"])
-          |> Map.put("label_url", response["label_pdf_url"])
+        IO.inspect response
 
         from = shipment["from_address"] |> Map.put("easypost_id", shipment["from_address"]["id"])
-        to = shipment["from_address"] |> Map.put("easypost_id", shipment["from_address"]["id"])
+        to = shipment["to_address"] |> Map.put("easypost_id", shipment["to_address"]["id"])
         parcel = shipment["parcel"] |> Map.put("easypost_id", shipment["parcel"]["id"])
         shipment_params = shipment 
           |> Map.put("tracking_code", response["tracking_code"])
           |> Map.put("carrier", response["selected_rate"]["carrier"])
           |> Map.put("rate", response["selected_rate"]["rate"])
           |> Map.put("service", response["selected_rate"]["service"])
-          |> Map.put("label_url", response["label_pdf_url"])
+          |> Map.put("label_url", response["postage_label"]["label_url"])
 
-        changesets = [Address.changeset(%Address{}, from), Address.changeset(%Address{}, to), Parcel.changeset(%Parcel{}, parcel), Shipment.changeset(%Shipment{}, shipment_params)]
-        if Enum.all(changesets, fn(changeset)-> changeset.valid? end) do
+        changesets = [from, to, parcel]
+          |> Enum.reject(fn(x)-> x["reference"] == nil end)
+          |> Enum.map(fn(x)-> 
+            case x["object"] do
+              "Address" ->
+                Address.changeset(%Address{}, x)
+              "Parcel" ->
+                Parcel.changeset(%Parcel{}, x)
+            end
+          end)
+          |> List.insert_at(10, Shipment.changeset(%Shipment{}, shipment_params))
+
+        if Enum.all?(changesets, fn(changeset)-> changeset.valid? end) do
           changesets
             |> Enum.map(fn(changeset)-> Task.async(fn()-> Repo.insert!(changeset) end) end)
             |> Enum.map(&Task.await/1)
@@ -65,6 +71,7 @@ defmodule Parcelmagic.ShipmentController do
           errors = changesets
             |> Enum.map(fn(changeset)-> changeset.errors end)
             |> List.flatten
+            |> Enum.reduce(%{}, fn({atom, val}, acc)-> Map.put(acc, Atom.to_string(atom), val) end)
           json conn |> put_status(422), %{"data" => %{"errors" => errors}}
         end
       {:error, _status, reason} ->
