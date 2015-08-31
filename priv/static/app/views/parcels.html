@@ -17,12 +17,14 @@
 
       <div class="card-panel" data-bind="visible: errormessage">An error occurred, please try again or contact the administator if this persists</div>
 
-      <table data-bind="visible: table">
+      <table data-bind="visible: table" class="responsive-table striped">
         <thead>
           <tr>
               <th data-field="id">Id</th>
-              <th data-field="name">Name</th>
-              <th data-field="dimensions">Dimensions (in)</th>
+              <th data-field="reference">Reference</th>
+              <th data-field="length">Length</th>
+              <th data-field="width">Width</th>
+              <th data-field="height">Height</th>
               <th data-field="weight">Weight (oz)</th>
               <th>Actions</th>
           </tr>
@@ -31,10 +33,13 @@
         <tbody data-bind="foreach: parcels">
           <tr>
             <td data-bind="text: id"></td>
-            <td data-bind="text: name"></td>
-            <td><span data-bind="text: length"></span>x<span data-bind="text: width">x</span><span data-bind="text: height"></span></td>
+            <td data-bind="text: reference"></td>
+            <td data-bind="text: length"></td>
+            <td data-bind="text: width"></td>
+            <td data-bind="text: height"></td>
             <td data-bind="text: weight"></td>
-            <td></td>
+            <td><a class="waves-effect waves-light btn">Delete</a>
+              &nbsp;&nbsp;&nbsp;<a data-bind="attr: { href: '#/quote?parcel=' + id }" class="waves-effect waves-light btn">Ship this</a></td>
           </tr>
         </tbody>
       </table>

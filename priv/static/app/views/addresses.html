@@ -17,13 +17,19 @@
 
       <div class="card-panel" data-bind="visible: errormessage">An error occurred, please try again or contact the administator if this persists</div>
         
-      <table data-bind="visible: table">
+      <table data-bind="visible: table" class="responsive-table striped">
         <thead>
           <tr>
               <th data-field="id">Id</th>
+              <th data-field="reference">Reference</th>
               <th data-field="name">Name</th>
+              <th data-field="company">Company</th>
               <th data-field="city">City</th>
               <th data-field="state">State</th>
+              <th data-field="zip">Postal Code</th>
+              <th data-field="country">Country</th>
+              <th data-field="phone">Phone</th>
+              <th data-field="email">Email</th>
               <th>Actions</th>
           </tr>
         </thead>
@@ -31,10 +37,19 @@
         <tbody data-bind="foreach: addresses">
           <tr>
             <td data-bind="text: id"></td>
+            <td data-bind="text: reference"></td>
             <td data-bind="text: name"></td>
+            <td data-bind="text: company"></td>
             <td data-bind="text: city"></td>
             <td data-bind="text: state"></td>
-            <td></td>
+            <td data-bind="text: zip"></td>
+            <td data-bind="text: country"></td>
+            <td data-bind="text: phone"></td>
+            <td data-bind="text: email"></td>
+            <td><a class="waves-effect waves-light btn">Delete</a>
+              &nbsp;&nbsp;&nbsp;<a data-bind="attr: { href: '#/quote?to=' + id }" class="waves-effect waves-light btn">Ship To</a>
+              &nbsp;&nbsp;&nbsp;<a data-bind="attr: { href: '#/quote?from=' + id }" class="waves-effect waves-light btn">Ship From</a>
+            </td>
           </tr>
         </tbody>
       </table>

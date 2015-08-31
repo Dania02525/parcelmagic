@@ -1,4 +1,4 @@
-﻿define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session'], function (http, router, app, ko, session) {
+﻿define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, router, app) {
     //Note: This module exports an object.
     //That means that every module that "requires" it will get the same object instance.
     //If you wish to be able to create multiple instances, instead export a function.
@@ -34,7 +34,6 @@
           self.loading(false);
           self.errormessage(true);
       });
-
     }
   }
 

@@ -13,10 +13,10 @@
                 </blockquote>
               </div>
               <div class="col s6">
-                <div class="switch">
+                <div class="switch" data-bind="click: From.clear">
                   <label>
                     Existing
-                    <input type="checkbox" data-bind="checked: FromNew">
+                    <input type="checkbox" data-bind="checked: From.isnew">
                     <span class="lever"></span>
                     New
                   </label>
@@ -24,7 +24,7 @@
               </div>
             </div>
 
-            <div class="row" data-bind="visible: FromNew() === false">          
+            <div class="row" data-bind="visible: From.isnew() === false">          
               <div class="input-field col s12">                
                 <input id="to-namesearch" type="text" class="validate" data-bind="value: From.searchterm, valueUpdate: 'afterkeydown'"></input>
                 <label for="to-namesearch">Find by name</label>    
@@ -34,9 +34,14 @@
                   </ul>
                 </div>
               </div>
+              <div class="col s12" data-bind="visible: From.easypost_id()">
+                <blockquote>
+                  <p data-bind="html: From.asText"></p>
+                </blockquote>
+              </div>
             </div>
 
-            <div data-bind="visible: FromNew">
+            <div data-bind="visible: From.isnew">
               <div class="row compact">          
                 <div class="input-field col s12">                
                   <input id="from-reference" type="text" class="active" data-bind="value: From.reference"></input>
@@ -81,7 +86,7 @@
                   <label for="zip">Zip/Postal Code</label>
                 </div>
                 <div class="input-field col s6">
-                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: From.country, optionsCaption: 'Select country...'"></select>
+                  <select class="browser-default" data-bind="options: From.countries, optionsText: 'name', optionsValue: 'alpha-2', value: From.country, optionsCaption: 'Select country...'"></select>
                 </div>
               </div>
               <div class="row compact">
@@ -105,10 +110,10 @@
                 </blockquote>
               </div>
               <div class="col s6">
-                <div class="switch">
+                <div class="switch" data-bind="click: To.clear">
                   <label>
                     Existing
-                    <input type="checkbox" data-bind="checked: ToNew">
+                    <input type="checkbox" data-bind="checked: To.isnew">
                     <span class="lever"></span>
                     New
                   </label>
@@ -116,7 +121,7 @@
               </div>
             </div>
 
-            <div class="row" data-bind="visible: ToNew() === false">          
+            <div class="row" data-bind="visible: To.isnew() === false">          
               <div class="input-field col s12">                
                 <input id="to-namesearch" type="text" data-bind="value: To.searchterm, valueUpdate: 'afterkeydown'" ></input>
                 <label for="to-namesearch">Find by reference</label>  
@@ -126,9 +131,14 @@
                   </ul>
                 </div>             
               </div>
+              <div class="col s12" data-bind="visible: To.easypost_id()">
+                <blockquote>
+                  <p data-bind="html: To.asText"></p>
+                </blockquote>
+              </div>
             </div>
 
-            <div data-bind="visible: ToNew">
+            <div data-bind="visible: To.isnew">
               <div class="row compact">          
                 <div class="input-field col s12">                
                   <input id="to-reference" type="text" class="active" data-bind="value: To.reference"></input>
@@ -173,7 +183,7 @@
                   <label for="zip">Zip/Postal Code</label>
                 </div>
                 <div class="input-field col s6">
-                  <select class="browser-default" data-bind="options: countries, optionsText: 'name', optionsValue: 'name', value: To.country, optionsCaption: 'Select country...'"></select>
+                  <select class="browser-default" data-bind="options: To.countries, optionsText: 'name', optionsValue: 'alpha-2', value: To.country, optionsCaption: 'Select country...'"></select>
                 </div>
               </div>
               <div class="row compact">
@@ -197,10 +207,10 @@
                 </blockquote>
               </div>
               <div class="col s6">
-                <div class="switch">
+                <div class="switch" data-bind="click: Parcel.clear">
                   <label>
                     Existing
-                    <input type="checkbox" data-bind="checked: ParcelNew">
+                    <input type="checkbox" data-bind="checked: Parcel.isnew">
                     <span class="lever"></span>
                     New
                   </label>
@@ -208,7 +218,7 @@
               </div>
             </div>
 
-            <div class="row" data-bind="visible: ParcelNew() === false">          
+            <div class="row" data-bind="visible: Parcel.isnew() === false">          
               <div class="input-field col s12">                
                 <input id="package-namesearch" type="text" data-bind="value: Parcel.searchterm, valueUpdate: 'afterkeydown'"></input>
                 <label for="package-namesearch">Find by reference</label>
@@ -218,9 +228,14 @@
                   </ul>
                 </div>
               </div>
+              <div class="col s12" data-bind="visible: Parcel.easypost_id()">
+                <blockquote>
+                  <p data-bind="html: Parcel.asText"></p>
+                </blockquote>
+              </div>
             </div>
 
-            <div data-bind="visible: ParcelNew">
+            <div data-bind="visible: Parcel.isnew">
               <div class="row compact">          
                 <div class="input-field col s12">                
                   <input id="parcel-name" type="text" class="active" data-bind="value: Parcel.reference"></input>
