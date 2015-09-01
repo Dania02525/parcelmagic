@@ -1,6 +1,7 @@
-define(['knockout'], function (ko) {
+define(['knockout', '../app/prototypes/Shipment'], function (ko, Shipment) {
 
   return {
-    token: ko.observable()
+    token: ko.observable(),
+    shipment: new Shipment()
   };
 });

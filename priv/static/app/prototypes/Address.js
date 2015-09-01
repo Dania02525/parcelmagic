@@ -1,7 +1,6 @@
-define(['plugins/http', 'plugins/router', 'durandal/app'], function(http, router, app){
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], function(http, router, app, ko, info){
 
   var Address = function(data){
-    var info = require('info');
     var self = this;
     self.reference = ko.observable(data.reference);
     self.isnew = ko.observable(false);
@@ -28,6 +27,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function(http, router
     self.phone = ko.observable(data.phone).extend({ required: true});
     self.email = ko.observable(data.email);
     self.easypost_id = ko.observable(data.easypost_id);
+    self.countries = info.countries;
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);  
     self.select = function(selection) {

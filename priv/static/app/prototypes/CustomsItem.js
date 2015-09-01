@@ -1,41 +1,36 @@
 define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(http, router, app, ko){
 
-  var Parcel = function(data){
+  var CustomsItem = function(data){
     var self = this;
     self.reference = ko.observable(data.reference);
-    self.object = "Parcel";
-    self.isnew = ko.observable(false);
-    self.length = ko.observable(data.length).extend({ required: true, number: true});
-    self.width = ko.observable(data.width).extend({ required: true, number: true});
-    self.height = ko.observable(data.height).extend({ required: true, number: true});
-    self.weight = ko.observable(data.weight).extend({ required: true, number: true});
+    self.description = ko.observable(data.description);
+    self.weight = ko.observable(data.weight);
+    self.value = ko.observable(data.value);
+    self.hs_tariff = ko.observable(data.hs_tariff);
+    self.origin_country = ko.observable(data.origin_country);
     self.easypost_id = ko.observable(data.easypost_id);
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
-    self.suggestions = ko.observableArray([]);
-    self.asText = ko.computed( function(){
-      return self.reference() + '<br>' + self.length() + 'in x ' + self.width() + 'in x ' + self.height() + 'in <br>' + self.weight() + 'oz';
-    });
+    self.suggestions = ko.obsevableArray([]);
     self.select = function(selection) {
-      self.suggestions([]);
-      if( !selection.disabled ){ 
-        self.reference(selection.reference);
-        self.length(selection.length);
-        self.width(selection.width);
-        self.height(selection.height);
+      if( !selection.disabled ){   
+        self.description(selection.description);
         self.weight(selection.weight);
+        self.value(selection.value);
+        self.hs_tariff(selection.hs_tariff);
+        self.origin_country(selection.origin_country);
         self.easypost_id(selection.easypost_id);
-      }    
-    }
+      }
+    };
     self.clear = function(){
       self.select({});
       self.searchterm('');
       return true;
-    };   
+    };
     ko.computed(function(){
       var query = self.searchterm();
       if(self.searchterm()){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
-        http.get('api/parcels', "query=" + query + "&limit=6", headers).then(function(response) {
+        http.get('api/customs_items', "query=" + query + "&limit=6", headers).then(function(response) {
           if( response.data.length > 0 ){
             self.suggestions(response.data);
             setTimeout(function() {
@@ -50,8 +45,8 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
           }
         })
       }
-    })
+    })   
   };
 
-  return Parcel;
+  return CustomsItem;
 });

@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/router', 'durandal/app'], function(http, router, app){
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(http, router, app, ko){
 
   var Rate = function(data){
     var self= this;
@@ -11,6 +11,17 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function(http, router
     self.carrierLogo = ko.computed(function() {
       return info.images[self.carrier()];
     });
+    self.buy = function(rate){
+      console.log(rate);
+      var data = {shipment: session.shipment, rate: rate};
+      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+      http.post('/api/shipments/buy', data, headers).then(function(response) {        
+          labelpopup = window.open(response.data.label_url, "Postage Label", "width=558,height=837"); 
+          labelpopup.print();    
+      }).fail( function() {
+          toastr["error"]("An error occurred");
+      });
+    };
   };
 
   return Rate;

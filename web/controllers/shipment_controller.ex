@@ -40,9 +40,9 @@ defmodule Parcelmagic.ShipmentController do
       {:ok, response} ->
         IO.inspect response
 
-        from = shipment["from_address"] |> Map.put("easypost_id", shipment["from_address"]["id"])
-        to = shipment["to_address"] |> Map.put("easypost_id", shipment["to_address"]["id"])
-        parcel = shipment["parcel"] |> Map.put("easypost_id", shipment["parcel"]["id"])
+        from = shipment["From"]
+        to = shipment["To"]
+        parcel = shipment["Parcel"]
         shipment_params = shipment 
           |> Map.put("tracking_code", response["tracking_code"])
           |> Map.put("carrier", response["selected_rate"]["carrier"])

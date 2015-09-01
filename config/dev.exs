@@ -24,7 +24,7 @@ config :parcelmagic, Parcelmagic.Endpoint,
   ]
 
 config :parcelmagic, easypost_endpoint: "https://api.easypost.com/v2/",
-                     easypost_key: "Test key"
+                     easypost_key: "Test Key"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
