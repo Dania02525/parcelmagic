@@ -2,22 +2,7 @@
   <div class="row">
     <h2 data-bind='text: displayName'></h2>
   </div>   
-  <div class="row" data-bind="visible: !session.shipment.Rates().length, compose: { view:'partials/edit_shipment.html' }"></div>
+  <div class="row" data-bind="visible: !session.shipment.rates().length, compose: { view:'partials/edit_shipment.html' }"></div>
 
-  <div class="row" data-bind="visible: session.shipment.loading()">
-    <h3 data-bind="text: session.shipment.loadingMessage"></h3>
-    <div class="preloader-wrapper big active">
-      <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div><div class="gap-patch">
-          <div class="circle"></div>
-        </div><div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row" data-bind="visible: session.shipment.Rates().length, compose: { view:'partials/show_rates.html' }"></div>
+  <div class="row" data-bind="visible: session.shipment.rates().length, compose: { view:'partials/show_rates.html' }"></div>
 </section>

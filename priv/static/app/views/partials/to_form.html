@@ -1,57 +1,57 @@
 <div class="row compact">          
   <div class="input-field col s12">                
-    <input id="to-reference" type="text" class="active" data-bind="value: session.shipment.To.reference"></input>
+    <input id="to-reference" type="text" class="active" data-bind="value: session.shipment.to_address.reference"></input>
     <label for="to-reference">Enter a reference to save this address</label>
   </div>
 </div>
 <div class="row compact" >          
   <div class="input-field col s6">                
-    <input id="to-name" type="text" class="active" data-bind="value: session.shipment.To.name"></input>
+    <input id="to-name" type="text" class="active" data-bind="value: session.shipment.to_address.name"></input>
     <label for="name">Name</label>
   </div>
   <div class="input-field col s6">
-    <input id="to-company" type="text" class="active" data-bind="value: session.shipment.To.company"></input>
+    <input id="to-company" type="text" class="active" data-bind="value: session.shipment.to_address.company"></input>
     <label for="company">Company</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s12">
-    <input id="to-street1" type="text" class="active" data-bind="value: session.shipment.To.street1"></input>
+    <input id="to-street1" type="text" class="active" data-bind="value: session.shipment.to_address.street1"></input>
     <label for="street">Street Address 1</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s12">
-    <input id="to-street2" type="text" class="active" data-bind="value: session.shipment.To.street2"></input>
+    <input id="to-street2" type="text" class="active" data-bind="value: session.shipment.to_address.street2"></input>
     <label for="street2">Street Address 2</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="to-city" type="text" class="active" data-bind="value: session.shipment.To.city"></input>
+    <input id="to-city" type="text" class="active" data-bind="value: session.shipment.to_address.city"></input>
     <label for="city">City</label>
   </div>
   <div class="input-field col s6">
-    <input id="to-state" type="text" class="active" data-bind="value: session.shipment.To.state"></input>
+    <input id="to-state" type="text" class="active" data-bind="value: session.shipment.to_address.state"></input>
     <label for="state">State/Province</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="to-zip" type="text" class="active" data-bind="value: session.shipment.To.zip"></input>
+    <input id="to-zip" type="text" class="active" data-bind="value: session.shipment.to_address.zip"></input>
     <label for="zip">Zip/Postal Code</label>
   </div>
   <div class="input-field col s6">
-    <select class="browser-default" data-bind="options: session.shipment.To.countries, optionsText: 'name', optionsValue: 'alpha-2', value: session.shipment.To.country, optionsCaption: 'Select country...'"></select>
+    <select class="browser-default" data-bind="options: session.shipment.to_address.countries, optionsText: 'name', optionsValue: 'alpha-2', value: session.shipment.to_address.country, optionsCaption: 'Select country...'"></select>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="to-phone" type="text" class="active" data-bind="value: session.shipment.To.phone"></input>
+    <input id="to-phone" type="text" class="active" data-bind="value: session.shipment.to_address.phone"></input>
     <label for="phone">Phone Number</label>
   </div>
   <div class="input-field col s6">
-    <input id="to-email" type="text" class="active" data-bind="value: session.shipment.To.email"></input>
+    <input id="to-email" type="text" class="active" data-bind="value: session.shipment.to_address.email"></input>
     <label for="email">Email</label>
   </div>
 </div>

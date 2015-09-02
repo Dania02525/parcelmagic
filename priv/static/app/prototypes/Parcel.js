@@ -5,11 +5,14 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
     self.reference = ko.observable(data.reference);
     self.object = "Parcel";
     self.isnew = ko.observable(false);
-    self.length = ko.observable(data.length).extend({ required: true, number: true});
-    self.width = ko.observable(data.width).extend({ required: true, number: true});
-    self.height = ko.observable(data.height).extend({ required: true, number: true});
-    self.weight = ko.observable(data.weight).extend({ required: true, number: true});
     self.easypost_id = ko.observable(data.easypost_id);
+    self.id_valid = function() {
+      return /^prcl+/.test(self.easypost_id());
+    }
+    self.length = ko.observable(data.length).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
+    self.width = ko.observable(data.width).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
+    self.height = ko.observable(data.height).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
+    self.weight = ko.observable(data.weight).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});        
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);
     self.asText = ko.computed( function(){

@@ -3,30 +3,34 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
   var Address = function(data){
     var self = this;
     self.reference = ko.observable(data.reference);
+    self.object = "Address";
     self.isnew = ko.observable(false);
+    self.easypost_id = ko.observable(data.easypost_id);
+    self.id_valid = function(){
+      return /^adr+/.test(self.easypost_id());
+    }
     self.name = ko.observable(data.name);
     self.company = ko.observable(data.company);
     self.name.extend({
       required: {
-        onlyIf: function() {return !self.company()},
+        onlyIf: function() {return (!self.company() && !self.id_valid())},
         message: "Name or Company required"
       }
     }); 
     self.company.extend({
       required: {
-        onlyIf: function() {return !self.name()},
+        onlyIf: function() {return (!self.name() && !self.id_valid())},
         message: "Name or Company required"
       }
     });
-    self.street1 = ko.observable(data.street1).extend({ required: true});
+    self.street1 = ko.observable(data.street1).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
     self.street2 = ko.observable(data.street2);
-    self.city = ko.observable(data.city).extend({ required: true});
+    self.city = ko.observable(data.city).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
     self.state = ko.observable(data.state);
     self.zip = ko.observable(data.zip);
-    self.country = ko.observable(data.country).extend({ required: true});
-    self.phone = ko.observable(data.phone).extend({ required: true});
-    self.email = ko.observable(data.email);
-    self.easypost_id = ko.observable(data.easypost_id);
+    self.country = ko.observable(data.country).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
+    self.phone = ko.observable(data.phone).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
+    self.email = ko.observable(data.email);   
     self.countries = info.countries;
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);  

@@ -33,19 +33,19 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
       if(context.from){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
         http.get('/api/addresses/' + context.from, {}, headers).then(function(response) {
-          session.shipment.From.select(response.data);
+          session.shipment.from_address.select(response.data);
         });
       }
       if(context.to){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
         http.get('/api/addresses/' + context.to, {}, headers).then(function(response) {
-          session.shipment.To.select(response.data);
+          session.shipment.to_address.select(response.data);
         });
       }
       if(context.parcel){
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
         http.get('/api/parcels/' + context.parcel, {}, headers).then(function(response) {
-          session.shipment.Parcel.select(response.data);
+          session.shipment.parcel.select(response.data);
         });
       }
     }

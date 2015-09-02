@@ -6,7 +6,7 @@
       </blockquote>
     </div>
     <div class="row compact">
-      <p data-bind="html: session.shipment.From.asText()"></p>
+      <p data-bind="html: session.shipment.from_address.asText()"></p>
       <a class="waves-effect waves-light btn" data-bind="click: session.shipment.edit">Change</a>
     </div>
   </div>
@@ -17,7 +17,7 @@
       </blockquote>
     </div>
     <div class="row compact">
-      <p data-bind="html: session.shipment.To.asText"></p>
+      <p data-bind="html: session.shipment.to_address.asText"></p>
       <a class="waves-effect waves-light btn" data-bind="click: session.shipment.edit">Change</a>
     </div>
   </div>
@@ -28,13 +28,13 @@
       </blockquote>
     </div>
     <div class="row compact">
-      <p data-bind="html: session.shipment.Parcel.asText"></p>
+      <p data-bind="html: session.shipment.parcel.asText"></p>
       <a class="waves-effect waves-light btn" data-bind="click: session.shipment.edit">Change</a>
     </div>
   </div>
 </div>
 <div class="row">
-  <!-- ko foreach: { data: session.shipment.Rates, as: 'quote' } -->
+  <!-- ko foreach: { data: session.shipment.rates, as: 'quote' } -->
     <div data-bind="compose: { view:'partials/ratecard.html' }"></div>
   <!-- /ko -->
 </div>

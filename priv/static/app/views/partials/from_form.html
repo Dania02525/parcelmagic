@@ -1,57 +1,57 @@
 <div class="row compact">          
   <div class="input-field col s12">                
-    <input id="from-reference" type="text" class="active" data-bind="value: session.shipment.From.reference"></input>
+    <input id="from-reference" type="text" class="active" data-bind="value: session.shipment.from_address.reference"></input>
     <label for="from-reference">Enter a reference to save this address</label>
   </div>
 </div>
 <div class="row compact" >          
   <div class="input-field col s6">                
-    <input id="from-name" type="text" class="active"  data-error="Must include name or company" data-bind="value: session.shipment.From.name"></input>
+    <input id="from-name" type="text" class="active"  data-error="Must include name or company" data-bind="value: session.shipment.from_address.name"></input>
     <label for="name">Name</label>
   </div>
   <div class="input-field col s6">
-    <input id="from-company" type="text" class="active" data-error="Must include name or company" data-bind="value: session.shipment.From.company"></input>
+    <input id="from-company" type="text" class="active" data-error="Must include name or company" data-bind="value: session.shipment.from_address.company"></input>
     <label for="company">Company</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s12">
-    <input id="from-street1" type="text" class="active" data-error="Required" data-bind="value: session.shipment.From.street1"></input>
+    <input id="from-street1" type="text" class="active" data-error="Required" data-bind="value: session.shipment.from_address.street1"></input>
     <label for="street">Street Address 1</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s12">
-    <input id="from-street2" type="text" class="active" data-bind="value: session.shipment.From.street2"></input>
+    <input id="from-street2" type="text" class="active" data-bind="value: session.shipment.from_address.street2"></input>
     <label for="street2">Street Address 2</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="from-city" type="text" class="active" data-bind="value: session.shipment.From.city"></input>
+    <input id="from-city" type="text" class="active" data-bind="value: session.shipment.from_address.city"></input>
     <label for="city">City</label>
   </div>
   <div class="input-field col s6">
-    <input id="from-state" type="text" class="active" data-bind="value: session.shipment.From.state"></input>
+    <input id="from-state" type="text" class="active" data-bind="value: session.shipment.from_address.state"></input>
     <label for="state">State/Province</label>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="from-zip" type="text" class="active" data-bind="value: session.shipment.From.zip"></input>
+    <input id="from-zip" type="text" class="active" data-bind="value: session.shipment.from_address.zip"></input>
     <label for="zip">Zip/Postal Code</label>
   </div>
   <div class="input-field col s6">
-    <select class="browser-default" data-bind="options: session.shipment.From.countries, optionsText: 'name', optionsValue: 'alpha-2', value: session.shipment.From.country, optionsCaption: 'Select country...'"></select>
+    <select class="browser-default" data-bind="options: session.shipment.from_address.countries, optionsText: 'name', optionsValue: 'alpha-2', value: session.shipment.from_address.country, optionsCaption: 'Select country...'"></select>
   </div>
 </div>
 <div class="row compact">
   <div class="input-field col s6">
-    <input id="from-phone" type="text" class="active" data-bind="value: session.shipment.From.phone"></input>
+    <input id="from-phone" type="text" class="active" data-bind="value: session.shipment.from_address.phone"></input>
     <label for="phone">Phone Number</label>
   </div>
   <div class="input-field col s6">
-    <input id="from-email" type="text" class="active" data-bind="value: session.shipment.From.email"></input>
+    <input id="from-email" type="text" class="active" data-bind="value: session.shipment.from_address.email"></input>
     <label for="email">Email</label>
   </div>
 </div>

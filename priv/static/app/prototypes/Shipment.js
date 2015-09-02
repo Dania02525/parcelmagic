@@ -2,32 +2,39 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
 
   var Shipment = function(){
     var self = this;
-    self.From = new Address({country: 'US'});
-    self.To = new Address({country: 'US'});
-    self.Parcel = new Parcel({});
-    self.Rates = ko.observableArray([]);
+    //lets change these to from_address and so on to match data from easypost
+    self.from_address = new Address({country: 'US'});
+    self.to_address = new Address({country: 'US'});
+    self.parcel = new Parcel({});
+    self.easypost_id = ko.observable();
+    self.rates = ko.observableArray([]);
     self.loading = ko.observable(false);
-    self.loadingMessage = ko.observable();
     self.getQuotes = function () {
+
       if( self.isValid()){
         self.loading(true);
-        self.loadingMessage('Fetching quotes...');
-        var data = {shipment:{from_address: self.From, to_address: self.To, parcel: self.Parcel}};
+
+        var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
+        var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
+        var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
+
+        var data = {shipment:{from_address: from, to_address: to, parcel: parcel}};
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
         http.post('/api/shipments/quote', data, headers).then(function(response) {
-            self.From.easypost_id(response.data.shipment.from_address.id);
-            self.To.easypost_id(response.data.shipment.to_address.id);
-            self.Parcel.easypost_id(response.data.shipment.parcel.id);
+            self.from_address.easypost_id(response.data.shipment.from_address.id);
+            self.to_address.easypost_id(response.data.shipment.to_address.id);
+            self.parcel.easypost_id(response.data.shipment.parcel.id);
+            self.easypost_id(response.data.shipment.id);
             self.loading(false);
-            self.loadingMessage = ko.observable();
             var count = response.data.rates.length;
+            var sortedrates = response.data.rates.sort(function(a,b){return parseFloat(a.rate)-parseFloat(b.rate)});
+            console.log(sortedrates);
             for(i=0;i<count;i++){
-              var rate = new Rate(response.data.rates[i]);
-              self.Rates.push(rate);       
-            }       
+              var rate = new Rate(sortedrates[i]);
+              self.rates.push(rate);       
+            }      
         }).fail( function() {
             self.loading(false);
-            self.loadingMessage = ko.observable();
             toastr["error"]("An error occurred, please check fields for accuracy");
         });
       }  
@@ -45,12 +52,13 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
       }
     };
     self.clear = function() {
-      self.From.clear();
-      self.To.clear();
-      self.Rates([]);
+      self.from_address.clear();
+      self.to_address.clear();
+      self.rates([]);
+      self.easypost_id('');
     }
     self.edit = function() {
-      self.Rates([]);
+      self.rates([]);
     }
   };
 

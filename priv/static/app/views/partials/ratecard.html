@@ -9,9 +9,23 @@
         <span class="white-text">Est Delivery Days: <span data-bind="text: quote.est_delivery_days"></span></span><br>
         <h5 class="white-text">Rate: $<span data-bind="text: quote.rate"></span></h5>
       </div>
-      <div class="col s6">
-        <a class="btn-large red lighten-2 right" data-bind="click: quote.buy">Buy it!</a>
+      <div class="col s6" >
+        <a class="btn-large red lighten-2 right" style="min-width:124.5px;" data-bind="click: quote.buy">
+          <span data-bind="visible: !quote.loading()">Buy it!</span>
+          <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: quote.loading()">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </span>
+        </a>
       </div>
+
     </div>  
   </div>
 </div>
