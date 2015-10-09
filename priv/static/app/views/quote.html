@@ -2,7 +2,141 @@
   <div class="row">
     <h2 data-bind='text: displayName'></h2>
   </div>   
-  <div class="row" data-bind="visible: !session.shipment.rates().length, compose: { view:'partials/edit_shipment.html' }"></div>
+  <div class="row" >
+    <form class="col s12">
+      <div class="row">
+        <div class="col l4 m12">
+          <div class="row compact">
+            <div class="col s6">
+              <blockquote>
+                <h4>from address</h4>
+              </blockquote>
+            </div>
+            <div class="col s6">
+              <div class="switch" data-bind="click: session.shipment.from_address.clear">
+                <label>
+                  Existing
+                  <input type="checkbox" data-bind="checked: session.shipment.from_address.isnew">
+                  <span class="lever"></span>
+                  New
+                </label>
+              </div>
+            </div>
+          </div>
 
-  <div class="row" data-bind="visible: session.shipment.rates().length, compose: { view:'partials/show_rates.html' }"></div>
+          <div class="row" data-bind="visible: session.shipment.from_address.isnew() === false">          
+            <div class="input-field col s12">                
+              <input id="to-namesearch" type="text" class="validate" data-bind="value: session.shipment.from_address.searchterm, valueUpdate: 'afterkeydown'"></input>
+              <label for="to-namesearch">Find by name</label>    
+              <div class="select-dropdown" data-bind="visible: session.shipment.from_address.suggestions().length">
+                <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: session.shipment.from_address.suggestions">
+                  <li data-bind="click: $parent.session.shipment.from_address.select"><span data-bind="text: reference"></span></li>                 
+                </ul>
+              </div>
+            </div>
+            <div class="col s12" data-bind="visible: session.shipment.from_address.easypost_id()">
+              <blockquote>
+                <p data-bind="html: session.shipment.from_address.asText"></p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div data-bind="visible: session.shipment.from_address.isnew() === true, compose: { view:'partials/from_form.html' }"></div></div>
+
+        <div class="col l4 m12">
+          <div class="row compact">
+            <div class="col s6">
+              <blockquote>
+                <h4>to address</h4>
+              </blockquote>
+            </div>
+            <div class="col s6">
+              <div class="switch" data-bind="click: session.shipment.to_address.clear">
+                <label>
+                  Existing
+                  <input type="checkbox" data-bind="checked: session.shipment.to_address.isnew">
+                  <span class="lever"></span>
+                  New
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" data-bind="visible: session.shipment.to_address.isnew() === false">          
+            <div class="input-field col s12">                
+              <input id="to-namesearch" type="text" data-bind="value: session.shipment.to_address.searchterm, valueUpdate: 'afterkeydown'" ></input>
+              <label for="to-namesearch">Find by reference</label>  
+              <div class="select-dropdown" data-bind="visible: session.shipment.to_address.suggestions().length">
+                <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: session.shipment.to_address.suggestions">
+                  <li data-bind="click: $parent.session.shipment.to_address.select"><span data-bind="text: reference"></span></li>
+                </ul>
+              </div>             
+            </div>
+            <div class="col s12" data-bind="visible: session.shipment.to_address.easypost_id()">
+              <blockquote>
+                <p data-bind="html: session.shipment.to_address.asText"></p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div data-bind="visible: session.shipment.to_address.isnew() === true, compose: { view:'partials/to_form.html' }"></div>
+        </div>
+
+        <div class="col l4 m12">
+          <div class="row compact">
+            <div class="col s6">
+              <blockquote>
+                <h4>parcel</h4>
+              </blockquote>
+            </div>
+            <div class="col s6">
+              <div class="switch" data-bind="click: session.shipment.parcel.clear">
+                <label>
+                  Existing
+                  <input type="checkbox" data-bind="checked: session.shipment.parcel.isnew">
+                  <span class="lever"></span>
+                  New
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" data-bind="visible: session.shipment.parcel.isnew() === false">          
+            <div class="input-field col s12">                
+              <input id="package-namesearch" type="text" data-bind="value: session.shipment.parcel.searchterm, valueUpdate: 'afterkeydown'"></input>
+              <label for="package-namesearch">Find by reference</label>
+              <div class="select-dropdown" data-bind="visible: session.shipment.parcel.suggestions().length">
+                <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: session.shipment.parcel.suggestions">
+                  <li data-bind="click: $parent.session.shipment.parcel.select"><span data-bind="text: reference"></span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col s12" data-bind="visible: session.shipment.parcel.easypost_id()">
+              <blockquote>
+                <p data-bind="html: session.shipment.parcel.asText"></p>
+              </blockquote>
+            </div>
+          </div>
+
+          <div data-bind="visible: session.shipment.parcel.isnew() === true, compose: { view:'partials/parcel_form.html' }"></div>
+        </div>
+      </div>
+      <div class="row">       
+        <a class="waves-effect waves-light btn-large right" style="min-width:124.5px;" data-bind="click: session.shipment.checkCustomsRequired">
+          <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">send</i>Go!</span>
+          <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </span>
+        </a>
+      </div>
+    </form>
+  </div>
 </section>

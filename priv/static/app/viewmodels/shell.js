@@ -13,6 +13,8 @@
                 { route: 'parcels', moduleId: 'viewmodels/parcels', nav: true },
                 { route: 'shipments', moduleId: 'viewmodels/shipments', nav: true },
                 { route: 'quote', moduleId: 'viewmodels/quote', nav: true },
+                { route: 'customs', moduleId: 'viewmodels/customs', nav: false },
+                { route: 'rates', moduleId: 'viewmodels/rates', nav: false },
             ]).buildNavigationModel();
             
             return router.activate();

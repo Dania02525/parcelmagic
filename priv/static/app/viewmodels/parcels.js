@@ -30,7 +30,24 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session']
           self.parcels(response.data);
           self.loading(false);
           self.table(true);
-      }).fail( function() {
+      }).fail( function(response) {
+          console.log(response.status); //401, 404, 500 etc 401 should cause redirect to login
+          console.log(JSON.parse(response.responseText)); //error message/decription object
+          switch(response.status){
+            case 401:
+              session.token(null);
+              router.navigate('#');
+              break;
+            case 400:
+              //display specific error message in toast 
+              break;
+            case 422:
+              //display specific error message in toast 
+              break;  
+            default:
+              //display some error about the server
+              break;
+          }
           self.loading(false);
           self.errormessage(true);
       });

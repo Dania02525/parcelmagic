@@ -1,0 +1,35 @@
+<section>
+  <div class="row">
+    <h2 data-bind='text: displayName'></h2>
+  </div>   
+  <div class="row" >
+    <form class="col s12">
+      <div class="row">
+        <div class="col s12">
+          <div class="row compact">
+            <div class="col s12">
+              <blockquote>
+                <h4>customs items</h4>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      <div class="row">       
+        <a class="waves-effect waves-light btn-large right" style="min-width:124.5px;" data-bind="click: session.shipment.getQuotes">
+          <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">send</i>Go!</span>
+          <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </span>
+        </a>
+      </div>
+    </form>
+  </div>
+</section>

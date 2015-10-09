@@ -9,11 +9,18 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.easypost_id = ko.observable();
     self.rates = ko.observableArray([]);
     self.loading = ko.observable(false);
+    self.checkCustomsRequired = function () {
+      if(self.from_address.country() != self.to_address.country()){
+        router.navigate('#customs');
+        return;
+      }
+      else {
+        self.getQuotes();
+      }
+    }
     self.getQuotes = function () {
-
       if( self.isValid()){
         self.loading(true);
-
         var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
         var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
         var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
@@ -21,6 +28,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
         var data = {shipment:{from_address: from, to_address: to, parcel: parcel}};
         var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
         http.post('/api/shipments/quote', data, headers).then(function(response) {
+            router.navigate('#rates');
             self.from_address.easypost_id(response.data.shipment.from_address.id);
             self.to_address.easypost_id(response.data.shipment.to_address.id);
             self.parcel.easypost_id(response.data.shipment.parcel.id);
