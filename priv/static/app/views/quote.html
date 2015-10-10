@@ -9,7 +9,7 @@
           <div class="row compact">
             <div class="col s6">
               <blockquote>
-                <h4>from address</h4>
+                <h4>from</h4>
               </blockquote>
             </div>
             <div class="col s6">
@@ -27,7 +27,7 @@
           <div class="row" data-bind="visible: session.shipment.from_address.isnew() === false">          
             <div class="input-field col s12">                
               <input id="to-namesearch" type="text" class="validate" data-bind="value: session.shipment.from_address.searchterm, valueUpdate: 'afterkeydown'"></input>
-              <label for="to-namesearch">Find by name</label>    
+              <label for="to-namesearch">Find by reference</label>    
               <div class="select-dropdown" data-bind="visible: session.shipment.from_address.suggestions().length">
                 <ul class="dropdown-content select-dropdown active suggestions" data-bind="foreach: session.shipment.from_address.suggestions">
                   <li data-bind="click: $parent.session.shipment.from_address.select"><span data-bind="text: reference"></span></li>                 
@@ -47,7 +47,7 @@
           <div class="row compact">
             <div class="col s6">
               <blockquote>
-                <h4>to address</h4>
+                <h4>to</h4>
               </blockquote>
             </div>
             <div class="col s6">
@@ -121,21 +121,26 @@
           <div data-bind="visible: session.shipment.parcel.isnew() === true, compose: { view:'partials/parcel_form.html' }"></div>
         </div>
       </div>
-      <div class="row">       
-        <a class="waves-effect waves-light btn-large right" style="min-width:124.5px;" data-bind="click: session.shipment.checkCustomsRequired">
-          <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">send</i>Go!</span>
-          <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+      <div class="row"> 
+        <div class="right">
+          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: session.shipment.clear">
+            <i class="material-icons left">refresh</i>Clear
+          </a>
+          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: session.shipment.checkCustomsRequired">
+            <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">forward</i>Next</span>
+            <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
-            </div>
-          </span>
-        </a>
+            </span>
+          </a>         
+        </div>
       </div>
     </form>
   </div>

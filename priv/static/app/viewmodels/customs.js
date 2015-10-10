@@ -17,6 +17,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
     var self = this;
     self.displayName = 'Shipping Quote Customs Info';
     self.session = session;
+    self.goBack = function () {
+      router.navigate('#quote');
+    }
     self.canActivate = function () {
       if( session.token() == null){
         router.navigate('#');
@@ -25,6 +28,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
       else{
         return true;
       }
+    }
+    self.activate = function (context) {
+
     }
     self.attached = function(view) {
       $(document).ready(function() {

@@ -13,6 +13,17 @@ body {
 main {
     flex: 1 0 auto;
 }
+td a{
+    vertical-align: middle;
+    text-align: right;
+    color: #757575;
+}
+th.col {
+    float:none !important;
+}
+td.col {
+    float:none !important;
+}
 .compact {
     margin-bottom: 5px !important;
 }

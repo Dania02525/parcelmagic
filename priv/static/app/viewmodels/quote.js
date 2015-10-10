@@ -48,6 +48,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
           session.shipment.parcel.select(response.data);
         });
       }
+      $(document).ready(function() {
+        $('select').material_select();
+      });
     }
     self.attached = function(view) {
       $(document).ready(function() {

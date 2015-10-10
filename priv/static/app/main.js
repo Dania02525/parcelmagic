@@ -9,7 +9,7 @@
         'jquery': '../lib/jquery/jquery-1.9.1',
         'materialize': '../lib/materialize/js/materialize.amd',
         'session': '../lib/session',
-        'info': '../lib/data',
+        'info': '../lib/info',
         'toastr': '../lib/toastr/toastr.min',
         
     },
@@ -32,14 +32,13 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'knockout', 'materialize', 'info', 'toastr', 'session', 'knockout.validation'],  function (system, app, viewLocator, ko, materialize, info, toastr, session, validation) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'knockout', 'materialize', 'toastr', 'session', 'knockout.validation'],  function (system, app, viewLocator, ko, materialize, toastr, session, validation) {
     //>>excludeStart("build", true);
     system.debug(true);
     //>>excludeEnd("build");
     window.toastr = toastr;
     window.ko = ko;
     window.session = session;
-    window.info = info;
     window.validation = validation;
     app.title = 'Parcelmagic';
 

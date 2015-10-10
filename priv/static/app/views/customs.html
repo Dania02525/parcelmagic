@@ -13,22 +13,93 @@
               </blockquote>
             </div>
           </div>
+
+          <table class="striped">
+            <thead>
+              <tr>
+                  <th class="col s3">Description</th>
+                  <th class="col s1">Weight (oz)</th>
+                  <th class="col s2">HS Tariff</th>
+                  <th class="col s3">Country of Origin</th>                
+                  <th class="col s1">Quantity</th>
+                  <th class="col s1">Value ($US)</th>
+
+                  <th class="col s1"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ko foreach: session.shipment.customs_info.customs_items -->
+                <tr>
+                  <td class="col s3"><input placeholder="Description" id="description" type="text" data-bind="value: description"></td>
+                  <td class="col s1"><input placeholder="Weight" id="weight" type="text" data-bind="value: weight"></td>
+                  <td class="col s2"><input placeholder="HS Tariff" id="hs_tariff" type="text" data-bind="value: hs_tariff"></td>
+                  <td class="col s3"><select class="browser-default" data-bind="options: session.info.to_countries, optionsText: 'name', optionsValue: 'alpha-2', value: origin_country, optionsCaption: 'Select origin country...'"></select></td>             
+                  <td class="col s1"><input placeholder="Quantity" id="quantity" type="number" data-bind="value: quantity"></td>
+                  <td class="col s1"><input placeholder="Value" id="value" type="text" data-bind="value: value"></td>
+                  <td class="col s1">
+                    <!-- ko if: session.shipment.customs_info.customs_items().length > 1 -->
+                      <a data-bind="click: session.shipment.customs_info.deleteCustomsItem"><i class="material-icons">delete</i></a>
+                    <!-- /ko -->
+                  </td>
+                </tr>
+              <!-- /ko -->
+              <tr>
+                <td>
+                  <a class="waves-effect waves-light btn-floating left" data-bind="click: session.shipment.customs_info.addCustomsItem">
+                    <i class="material-icons right">add</i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+
+      <div class="row compact">         
+        <div class="input-field col s3">
+          <select class="browser-default" data-bind="options: session.info.customs_content_types, optionsText: 'name', optionsValue: 'value', value: session.shipment.customs_info.contents_type, optionsCaption: 'Select contents type...'"></select>
+        </div>
+        <!-- ko if: session.shipment.customs_info.contents_type() == "other" -->
+        <div class="input-field col s9">
+          <input id="customs_info_contents_explanation" type="text" class="active" data-bind="value: session.shipment.customs_info.contents_explanation"></input>
+          <label for="zip">Contents Explanation</label>
+        </div>        
+        <!-- /ko -->
+      </div>
+
+      <div class="row">         
+        <div class="input-field col s6">
+          <p>
+            <input type="checkbox" id="customs_info_certify" data-bind="checked: session.shipment.customs_info.customs_certify"/>
+            <label for="customs_info_certify">Certified true and correct by customs signer</label>
+          </p>
+        </div>
+        <div class="input-field col s6">
+          <input id="customs_info_signer" type="text" class="active" data-bind="value: session.shipment.customs_info.customs_signer"></input>
+          <label for="zip">Customs Signer</label>
+        </div>
+      </div>
+
       <div class="row">       
-        <a class="waves-effect waves-light btn-large right" style="min-width:124.5px;" data-bind="click: session.shipment.getQuotes">
-          <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">send</i>Go!</span>
-          <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
+        <div class="right">
+          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: goBack">
+            <i class="material-icons left">undo</i>Back
+          </a>
+          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: session.shipment.getQuotes">
+            <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">forward</i>Next</span>
+            <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
               </div>
-            </div>
-          </span>
-        </a>
+            </span>
+          </a>        
+        </div>
       </div>
     </form>
   </div>

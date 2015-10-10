@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel', './Rate', 'knockout'], function(http, router, app, Address, Parcel, Rate, ko) {
+define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel', './Rate', './CustomsInfo', 'knockout'], function(http, router, app, Address, Parcel, Rate, CustomsInfo, ko) {
 
   var Shipment = function(){
     var self = this;
@@ -6,10 +6,12 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.from_address = new Address({country: 'US'});
     self.to_address = new Address({country: 'US'});
     self.parcel = new Parcel({});
+    self.customs_info = new CustomsInfo({});   
     self.easypost_id = ko.observable();
     self.rates = ko.observableArray([]);
     self.loading = ko.observable(false);
     self.checkCustomsRequired = function () {
+      //validate addresses first
       if(self.from_address.country() != self.to_address.country()){
         router.navigate('#customs');
         return;
@@ -17,7 +19,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
       else {
         self.getQuotes();
       }
-    }
+    }   
     self.getQuotes = function () {
       if( self.isValid()){
         self.loading(true);
@@ -62,6 +64,8 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.clear = function() {
       self.from_address.clear();
       self.to_address.clear();
+      self.parcel.clear();
+      self.customs_info({});
       self.rates([]);
       self.easypost_id('');
     }
