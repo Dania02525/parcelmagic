@@ -2,7 +2,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
 
   var CustomsItem = function(data){
     var self = this;
-    self.reference = ko.observable(data.reference).extend({ required: true});
+    self.reference = ko.observable(data.reference);
     self.description = ko.observable(data.description).extend({ required: true});
     self.weight = ko.observable(data.weight).extend({ required: true, number: true});
     self.value = ko.observable(data.value).extend({ required: true, number: true});

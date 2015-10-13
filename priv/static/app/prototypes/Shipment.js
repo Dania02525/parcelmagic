@@ -9,52 +9,52 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.customs_info = new CustomsInfo({});   
     self.easypost_id = ko.observable();
     self.rates = ko.observableArray([]);
-    self.loading = ko.observable(false);
-    self.checkCustomsRequired = function () {
-      //validate addresses first
-      if(self.from_address.country() != self.to_address.country()){
-        router.navigate('#customs');
-        return;
-      }
-      else {
-        self.getQuotes();
-      }
-    }   
-    self.getQuotes = function () {
+    self.loading = ko.observable(false);  
+    self.proceed = function () {
       if( self.isValid()){
-        self.loading(true);
-        var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
-        var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
-        var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
-
+        if(self.from_address.country() != self.to_address.country()){
+          router.navigate('#customs');
+          return;
+        }
+        else {
+          self.getQuotes();
+        }
+      }
+    }
+    self.getQuotes = function () {  
+      self.loading(true);
+      var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
+      var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
+      var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
+      if( self.customs_info.isValid() ){
+        var data = {shipment:{from_address: from, to_address: to, parcel: parcel, customs_info: self.customs_info}};
+      }
+      else{
         var data = {shipment:{from_address: from, to_address: to, parcel: parcel}};
-        var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
-        http.post('/api/shipments/quote', data, headers).then(function(response) {
-            router.navigate('#rates');
-            self.from_address.easypost_id(response.data.shipment.from_address.id);
-            self.to_address.easypost_id(response.data.shipment.to_address.id);
-            self.parcel.easypost_id(response.data.shipment.parcel.id);
-            self.easypost_id(response.data.shipment.id);
-            self.loading(false);
-            var count = response.data.rates.length;
-            var sortedrates = response.data.rates.sort(function(a,b){return parseFloat(a.rate)-parseFloat(b.rate)});
-            console.log(sortedrates);
-            for(i=0;i<count;i++){
-              var rate = new Rate(sortedrates[i]);
-              self.rates.push(rate);       
-            }      
-        }).fail( function() {
-            self.loading(false);
-            toastr["error"]("An error occurred, please check fields for accuracy");
-        });
-      }  
-      else {
-        toastr["error"]("Please check required parameters " + ko.validation.group(self, { deep: true })());
-      } 
+      }    
+      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+      http.post('/api/shipments/quote', data, headers).then(function(response) {
+          router.navigate('#rates');
+          self.from_address.easypost_id(response.data.shipment.from_address.id);
+          self.to_address.easypost_id(response.data.shipment.to_address.id);
+          self.parcel.easypost_id(response.data.shipment.parcel.id);
+          self.easypost_id(response.data.shipment.id);
+          self.loading(false);
+          var count = response.data.rates.length;
+          var sortedrates = response.data.rates.sort(function(a,b){return parseFloat(a.rate)-parseFloat(b.rate)});
+          console.log(sortedrates);
+          for(i=0;i<count;i++){
+            var rate = new Rate(sortedrates[i]);
+            self.rates.push(rate);       
+          }      
+      }).fail( function() {
+          self.loading(false);
+          toastr["error"]("An error occurred, please check fields for accuracy");
+      });
     };
     self.isValid = function() {
-      if(ko.validation.group(self)().length){
-        ko.validation.group(self).showAllMessages(true);
+      if(ko.validation.group([self.from_address, self.to_address, self.parcel])().length){
+        ko.validation.group([self.from_address, self.to_address, self.parcel]).showAllMessages(true);
         return false;
       }
       else {

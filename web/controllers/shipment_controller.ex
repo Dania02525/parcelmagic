@@ -17,11 +17,13 @@ defmodule Parcelmagic.ShipmentController do
   #this route gets quotes on the shipment
   def getquote(conn, %{"shipment" => shipment_params}) do
     case create_shipment(shipment_params) do
-      {:ok, response} ->  
+      {:ok, response} ->
+      IO.inspect response  
         shipment = response |> Map.put("easypost_id", response["id"]) 
 
         json conn |> put_status(200), %{"data" => %{"rates" => response["rates"], "shipment" => shipment}}
       {:error, _status, reason} ->
+        IO.inspect reason
         conn
         |> put_status(:unprocessable_entity)
         |> render(Parcelmagic.ChangesetView, "error.json", changeset: reason)

@@ -69,14 +69,15 @@
 
       <div class="row">         
         <div class="input-field col s6">
-          <p>
+          <p data-bind="click: session.shipment.customs_info.check_certify">
             <input type="checkbox" id="customs_info_certify" data-bind="checked: session.shipment.customs_info.customs_certify"/>
-            <label for="customs_info_certify">Certified true and correct by customs signer</label>
+            <label for="customs_info_certify">Certified true and correct by customs signer</label>    
           </p>
+          <span class="validationMessage" data-bind="visible: session.shipment.customs_info.show_certify_statement">You are required to certify this customs document</span>
         </div>
         <div class="input-field col s6">
           <input id="customs_info_signer" type="text" class="active" data-bind="value: session.shipment.customs_info.customs_signer"></input>
-          <label for="zip">Customs Signer</label>
+          <label for="zip">Customs Signer</label>    
         </div>
       </div>
 
@@ -85,7 +86,7 @@
           <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: goBack">
             <i class="material-icons left">undo</i>Back
           </a>
-          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: session.shipment.getQuotes">
+          <a class="waves-effect waves-light btn-large" style="min-width:124.5px;" data-bind="click: session.shipment.customs_info.proceed">
             <span data-bind="visible: !session.shipment.loading()"><i class="material-icons right">forward</i>Next</span>
             <span class="preloader-wrapper small active" style="bottom: -10px;" data-bind="visible: session.shipment.loading()">
               <div class="spinner-layer spinner-blue-only">

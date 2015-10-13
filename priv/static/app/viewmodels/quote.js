@@ -11,7 +11,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
       decorateElementOnModified: true,
       messagesOnModified: true,
       grouping: {
-        deep: true
+        deep: false
       }
     });
     var self = this;
