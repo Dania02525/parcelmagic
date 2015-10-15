@@ -1,18 +1,20 @@
 ﻿<div>
-  
     <nav>
       <div class="nav-wrapper">
-        <div class="container">
-          <a href="#" class="brand-logo">
-            <i class="fa fa-home"></i>
-          </a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down" data-bind="foreach: router.navigationModel">
+          <a href="#" class="left hide-on-med-and-down">Parcelmagic</a>
+          <a href="#" class="left hide-on-large-only"><i class="material-icons">home</i></a>
+          
+          <ul class="right hide-on-med-and-down" data-bind="foreach: router.navigationModel">
             <li data-bind="css: { active: isActive }"><a data-bind="attr: { href: hash }, text: title"></a></li>
           </ul>
+
+          <a class="right hide-on-large-only" data-bind="click: toggleMenu"><i class="material-icons">menu</i></a>
+
+          <ul class="side-nav" id="mobile-menu" style="left: 0 !important; display: none" data-bind="foreach: router.navigationModel">
+            <li data-bind="css: { active: isActive }"><a data-bind="click: $parent.toggleMenu, attr: { href: hash }, text: title"></a></li>
+          </ul>
         </div>
-      </div>
     </nav>
 
     <div class="page-host" data-bind="router: { transition:'entrance' }"></div>            
-            
-</div>
+</div>        

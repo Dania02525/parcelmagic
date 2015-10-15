@@ -1,10 +1,9 @@
-﻿define(['plugins/router', 'durandal/app'], function (router, app) {
+﻿define(['plugins/router', 'durandal/app', 'knockout'], function (router, app, ko) {
     return {
         router: router,
-        search: function() {
-            //It's really easy to show a message box.
-            //You can add custom options too. Also, it returns a promise for the user's response.
-            app.showMessage('Search not yet implemented...');
+        toggleMenu: function() {
+            $("#mobile-menu").toggle();
+            return true;
         },
         activate: function () {
             router.map([
@@ -16,8 +15,8 @@
                 { route: 'customs', moduleId: 'viewmodels/customs', nav: false },
                 { route: 'rates', moduleId: 'viewmodels/rates', nav: false },
             ]).buildNavigationModel();
-            
-            return router.activate();
-        }        
+           
+            return router.activate();          
+        }, 
     };
 });

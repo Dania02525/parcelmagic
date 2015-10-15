@@ -41,6 +41,10 @@ td.col {
 .validationMessage {
     color:red;
 }
+.nav-wrapper{
+    padding-left:20px;
+    padding-right:20px;
+}
 .suggestions {
     width: 100%; 
     position: absolute; 

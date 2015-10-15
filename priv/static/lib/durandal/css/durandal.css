@@ -39,7 +39,7 @@
 .modal-content {
     background-color: white;
     padding: 20px;
-    min-width:450px;
+    min-width: 300px;
 }
 
 .messageBox {

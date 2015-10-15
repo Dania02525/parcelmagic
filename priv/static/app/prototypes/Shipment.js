@@ -11,7 +11,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.rates = ko.observableArray([]);
     self.loading = ko.observable(false);  
     self.proceed = function () {
-      if( self.isValid()){
+      if( self.from_address.isValid() && self.to_address.isValid() && self.parcel.isValid()){
         if(self.from_address.country() != self.to_address.country()){
           router.navigate('#customs');
           return;
@@ -20,13 +20,29 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
           self.getQuotes();
         }
       }
+      else{
+        self.from_address.isValid();
+        self.to_address.isValid();
+        self.parcel.isValid();
+      }      
     }
     self.getQuotes = function () {  
       self.loading(true);
       var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
       var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
       var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
-      if( self.customs_info.isValid() ){
+      //validation
+      if( !self.from_address.isValid() || !self.to_address.isValid() || !self.parcel.isValid() ){
+        self.from_address.isValid();
+        self.to_address.isValid();
+        self.parcel.isValid();
+        router.navigate('#quote');
+      }
+      if( !self.customs_info.isValid() && (self.to_address.country() !== self.from_address.country() )){
+        self.customs_info.isValid();
+        router.navigate('#customs');
+      }
+      if( self.to_address.country() !== self.from_address.country() ){
         var data = {shipment:{from_address: from, to_address: to, parcel: parcel, customs_info: self.customs_info}};
       }
       else{
@@ -51,15 +67,6 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
           self.loading(false);
           toastr["error"]("An error occurred, please check fields for accuracy");
       });
-    };
-    self.isValid = function() {
-      if(ko.validation.group([self.from_address, self.to_address, self.parcel])().length){
-        ko.validation.group([self.from_address, self.to_address, self.parcel]).showAllMessages(true);
-        return false;
-      }
-      else {
-        return true;
-      }
     };
     self.clear = function() {
       self.from_address.clear();

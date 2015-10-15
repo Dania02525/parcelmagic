@@ -54,6 +54,15 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
         })
       }
     })
+    self.isValid = function(){
+      if(ko.validation.group(self)().length){
+        ko.validation.group(self).showAllMessages(true);
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
   };
 
   return Parcel;

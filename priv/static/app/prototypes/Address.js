@@ -1,4 +1,4 @@
-define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(http, router, app, ko){
+define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], function(http, router, app, ko, info){
 
   var Address = function(data){
     var self = this;
@@ -111,6 +111,15 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
         })
       }
     })
+    self.isValid = function(){
+      if(ko.validation.group(self)().length){
+        ko.validation.group(self).showAllMessages(true);
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
   };
   return Address; 
 }); //end module definition
