@@ -24,6 +24,9 @@ th.col {
 td.col {
     float:none !important;
 }
+.card-mini {
+    height:220px;
+}
 .compact {
     margin-bottom: 5px !important;
 }
