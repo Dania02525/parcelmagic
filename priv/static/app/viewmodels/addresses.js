@@ -12,20 +12,21 @@
     self.errormessage = ko.observable(false);
     self.addresses = ko.observable([]);
     self.canActivate = function () {
-      if( session.token() == null){
+      if( session.token() === null){
         router.navigate('#');
         return false;
       }
       else{
         return true;
       }
-    }
+    };
     self.attached = function(view) {
+      var headers = {};
       self.loading(true);
       self.table(false);
       self.errormessage(false);
       self.addresses([]);
-      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+      headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
       http.get('/api/addresses', {}, headers).then(function(response) {
           self.addresses(response.data);
           self.loading(false);
@@ -34,7 +35,7 @@
           self.loading(false);
           self.errormessage(true);
       });
-    }
+    };
   }
 
   return new vm();

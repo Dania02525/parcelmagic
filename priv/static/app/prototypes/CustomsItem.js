@@ -13,7 +13,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);
     self.select = function(selection) {
-      if( !selection.disabled ){   
+      if( !selection.disabled ){
         self.description(selection.description);
         self.weight(selection.weight);
         self.value(selection.value);
@@ -44,9 +44,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
                 self.suggestions([]);
               }, 4000);
           }
-        })
+        });
       }
-    })   
+    });
   };
 
   return CustomsItem;

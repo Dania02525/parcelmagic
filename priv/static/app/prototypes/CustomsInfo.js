@@ -4,12 +4,12 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', './Customs
     var self = this;
     self.customs_items = ko.observableArray([new CustomsItem({})]);
     self.contents_type = ko.observable(data.content_type).extend({ required: true});
-    self.contents_explanation = ko.observable(data.content_explanation).extend({ 
-      required: { 
-        onlyIf: function() {return (self.contents_type() == "other")}
+    self.contents_explanation = ko.observable(data.content_explanation).extend({
+      required: {
+        onlyIf: function() {return (self.contents_type() == "other");}
       }
-    });   
-    self.customs_certify = ko.observable(); 
+    });
+    self.customs_certify = ko.observable();
     self.customs_signer = ko.observable(data.customs_signer).extend({ required: true});
     self.restriction_type = "none";
     self.restriction_comments = "";
@@ -24,18 +24,18 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', './Customs
         self.show_certify_statement(false);
         return true;
       }
-      else{  
+      else{
         return true;
       }
-    }
+    };
     self.addCustomsItem = function () {
       self.customs_items.push(new CustomsItem({}));
-    }
+    };
     self.deleteCustomsItem = function (customsItem) {
       if( self.customs_items().length > 1){
         self.customs_items.remove(customsItem);
-      } 
-    }
+      }
+    };
     self.isValid = function() {
       if(ko.validation.group([self.customs_items, self])().length){
         ko.validation.group([self.customs_items, self]).showAllMessages(true);
@@ -61,7 +61,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', './Customs
       self.contents_type("");
       self.contents_explanation("");
       self.customs_certify(false);
-      self.customs_signer("")
+      self.customs_signer("");
       return true;
     };
   

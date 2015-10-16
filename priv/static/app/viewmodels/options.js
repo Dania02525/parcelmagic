@@ -18,19 +18,19 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
     self.displayName = 'Shipping Quote Rates';
     self.session = session;
     self.canActivate = function () {
-      if( session.token() == null){
+      if( session.token() === null){
         router.navigate('#');
         return false;
       }
       else{
         return true;
       }
-    }
+    };
     self.attached = function(view) {
       $(document).ready(function() {
         $('select').material_select();
       });
-    }
+    };
   }
 
   return new vm();

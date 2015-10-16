@@ -18,32 +18,33 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
     self.displayName = 'Shipping Quote';
     self.session = session;
     self.canActivate = function () {
-      if( session.token() == null){
+      if( session.token() === null){
         router.navigate('#');
         return false;
       }
       else{
         return true;
       }
-    }
+    };
     self.activate = function (context) {
-      if(typeof context == 'undefined'){
+      var headers = {};
+      if(typeof context === 'undefined'){
         context = {};
       }
       if(context.from){
-        var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+        headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
         http.get('/api/addresses/' + context.from, {}, headers).then(function(response) {
           session.shipment.from_address.select(response.data);
         });
       }
       if(context.to){
-        var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+        headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
         http.get('/api/addresses/' + context.to, {}, headers).then(function(response) {
           session.shipment.to_address.select(response.data);
         });
       }
       if(context.parcel){
-        var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+        headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
         http.get('/api/parcels/' + context.parcel, {}, headers).then(function(response) {
           session.shipment.parcel.select(response.data);
         });
@@ -51,12 +52,12 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
       $(document).ready(function() {
         $('select').material_select();
       });
-    }
+    };
     self.attached = function(view) {
       $(document).ready(function() {
         $('select').material_select();
       });
-    }
+    };
   }
 
   return new vm();

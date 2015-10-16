@@ -6,10 +6,10 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
     self.from_address = new Address({country: 'US'});
     self.to_address = new Address({country: 'US'});
     self.parcel = new Parcel({});
-    self.customs_info = new CustomsInfo({});   
+    self.customs_info = new CustomsInfo({});
     self.easypost_id = ko.observable();
     self.rates = ko.observableArray([]);
-    self.loading = ko.observable(false);  
+    self.loading = ko.observable(false);
     self.proceed = function () {
       if( self.from_address.isValid() && self.to_address.isValid() && self.parcel.isValid()){
         if(self.from_address.country() != self.to_address.country()){
@@ -24,13 +24,17 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
         self.from_address.isValid();
         self.to_address.isValid();
         self.parcel.isValid();
-      }      
-    }
-    self.getQuotes = function () {  
-      self.loading(true);
+      }
+    };
+    self.getQuotes = function () {
       var from = self.from_address.id_valid() ? {id: self.from_address.easypost_id()} : self.from_address;
       var to = self.to_address.id_valid() ? {id: self.to_address.easypost_id()} : self.to_address;
       var parcel = self.parcel.id_valid() ? {id: self.parcel.easypost_id()} : self.parcel;
+      var data = {};
+      var headers = {};
+      var count = 0;
+      var sortedrates = [];
+
       //validation
       if( !self.from_address.isValid() || !self.to_address.isValid() || !self.parcel.isValid() ){
         self.from_address.isValid();
@@ -43,12 +47,15 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
         router.navigate('#customs');
       }
       if( self.to_address.country() !== self.from_address.country() ){
-        var data = {shipment:{from_address: from, to_address: to, parcel: parcel, customs_info: self.customs_info}};
+        data = {shipment:{from_address: from, to_address: to, parcel: parcel, customs_info: self.customs_info}};
       }
       else{
-        var data = {shipment:{from_address: from, to_address: to, parcel: parcel}};
-      }    
-      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+        data = {shipment:{from_address: from, to_address: to, parcel: parcel}};
+      }
+
+      //work
+      self.loading(true);
+      headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
       http.post('/api/shipments/quote', data, headers).then(function(response) {
           router.navigate('#rates');
           self.from_address.easypost_id(response.data.shipment.from_address.id);
@@ -56,13 +63,13 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
           self.parcel.easypost_id(response.data.shipment.parcel.id);
           self.easypost_id(response.data.shipment.id);
           self.loading(false);
-          var count = response.data.rates.length;
-          var sortedrates = response.data.rates.sort(function(a,b){return parseFloat(a.rate)-parseFloat(b.rate)});
+          count = response.data.rates.length;
+          sortedrates = response.data.rates.sort(function(a,b){return parseFloat(a.rate)-parseFloat(b.rate);});
           console.log(sortedrates);
           for(i=0;i<count;i++){
             var rate = new Rate(sortedrates[i]);
-            self.rates.push(rate);       
-          }      
+            self.rates.push(rate);
+          }
       }).fail( function() {
           self.loading(false);
           toastr["error"]("An error occurred, please check fields for accuracy");
@@ -75,10 +82,10 @@ define(['plugins/http', 'plugins/router', 'durandal/app', './Address', './Parcel
       self.customs_info({});
       self.rates([]);
       self.easypost_id('');
-    }
+    };
     self.edit = function() {
       self.rates([]);
-    }
+    };
   };
 
   return Shipment;

@@ -12,20 +12,21 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session']
     self.errormessage = ko.observable(false);
     self.shipments = ko.observable([]);
     self.canActivate = function () {
-      if( session.token() == null){
+      if( session.token() === null){
         router.navigate('#');
         return false;
       }
       else{
         return true;
       }
-    }
+    };
     self.attached = function(view) {
+      var headers = {};
       self.loading(true);
       self.table(false);
       self.errormessage(false);
       self.shipments([]);
-      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
+      headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
       http.get('/api/shipments', {}, headers).then(function(response) {
           self.shipments(response.data);
           self.loading(false);
@@ -34,7 +35,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'session']
           self.loading(false);
           self.errormessage(true);
       });
-    }
+    };
 
   }
 

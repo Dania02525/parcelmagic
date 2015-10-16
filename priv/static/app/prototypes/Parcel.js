@@ -7,12 +7,12 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
     self.isnew = ko.observable(false);
     self.easypost_id = ko.observable(data.easypost_id);
     self.id_valid = function() {
-      return /^prcl+/.test(self.easypost_id());
-    }
-    self.length = ko.observable(data.length).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
-    self.width = ko.observable(data.width).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
-    self.height = ko.observable(data.height).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});
-    self.weight = ko.observable(data.weight).extend({ required: { onlyIf: function() {return !self.id_valid()}}, number: true});        
+      return (/^prcl+/).test(self.easypost_id());
+    };
+    self.length = ko.observable(data.length).extend({ required: { onlyIf: function() {return !self.id_valid();}}, number: true});
+    self.width = ko.observable(data.width).extend({ required: { onlyIf: function() {return !self.id_valid();}}, number: true});
+    self.height = ko.observable(data.height).extend({ required: { onlyIf: function() {return !self.id_valid();}}, number: true});
+    self.weight = ko.observable(data.weight).extend({ required: { onlyIf: function() {return !self.id_valid();}}, number: true});
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
     self.suggestions = ko.observableArray([]);
     self.asText = ko.computed( function(){
@@ -20,20 +20,20 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
     });
     self.select = function(selection) {
       self.suggestions([]);
-      if( !selection.disabled ){ 
+      if( !selection.disabled ){
         self.reference(selection.reference);
         self.length(selection.length);
         self.width(selection.width);
         self.height(selection.height);
         self.weight(selection.weight);
         self.easypost_id(selection.easypost_id);
-      }    
-    }
+      }
+    };
     self.clear = function(){
       self.select({});
       self.searchterm('');
       return true;
-    };   
+    };
     ko.computed(function(){
       var query = self.searchterm();
       if(self.searchterm()){
@@ -51,9 +51,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
                 self.suggestions([]);
               }, 4000);
           }
-        })
+        });
       }
-    })
+    });
     self.isValid = function(){
       if(ko.validation.group(self)().length){
         ko.validation.group(self).showAllMessages(true);
@@ -62,7 +62,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout'], function(
       else{
         return true;
       }
-    }
+    };
   };
 
   return Parcel;

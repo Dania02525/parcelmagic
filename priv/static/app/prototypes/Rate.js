@@ -15,12 +15,12 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
     self.buy = function(rate){
       self.loading(true);
       var data = {shipment: session.shipment, rate: rate};
-      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()}
-      http.post('/api/shipments/buy', data, headers).then(function(response) {  
-      self.loading(false);      
-          labelpopup = window.open(response.data.label_url, "Postage Label", "width=558,height=837"); 
-          labelpopup.print(); 
-          router.navigate('#shipments');   
+      var headers = {contentType: "application/json", authorization: "Bearer " + session.token()};
+      http.post('/api/shipments/buy', data, headers).then(function(response) {
+      self.loading(false);
+          labelpopup = window.open(response.data.label_url, "Postage Label", "width=558,height=837");
+          labelpopup.print();
+          router.navigate('#shipments');
       }).fail( function() {
           self.loading(false);
           toastr["error"]("An error occurred");

@@ -16,7 +16,7 @@
                 { route: 'rates', moduleId: 'viewmodels/rates', nav: false },
             ]).buildNavigationModel();
            
-            return router.activate();          
-        }, 
+            return router.activate();
+        },
     };
 });

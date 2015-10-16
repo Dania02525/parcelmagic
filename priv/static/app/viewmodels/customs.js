@@ -19,24 +19,21 @@ define(['plugins/http', 'plugins/router', 'durandal/app'], function (http, route
     self.session = session;
     self.goBack = function () {
       router.navigate('#quote');
-    }
+    };
     self.canActivate = function () {
-      if( session.token() == null){
+      if( session.token() === null){
         router.navigate('#');
         return false;
       }
       else{
         return true;
       }
-    }
-    self.activate = function (context) {
-
-    }
+    };
     self.attached = function(view) {
       $(document).ready(function() {
         $('select').material_select();
       });
-    }
+    };
   }
 
   return new vm();

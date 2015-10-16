@@ -12,12 +12,12 @@ define(['plugins/http', 'plugins/dialog', 'knockout', 'materialize', 'session'],
     var self = this;
     http.post('/login', {email: this.email, password: this.password}).then(function(response) {
         self.loading(false);
-          session.token(response.token)
+          session.token(response.token);
           dialog.close(self);
       }).fail( function() {
           self.loading(false);
           self.errorMessage(true);
-      }); 
+      });
   };
 
   Login.show = function(){

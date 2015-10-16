@@ -7,35 +7,35 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
     self.isnew = ko.observable(false);
     self.easypost_id = ko.observable(data.easypost_id);
     self.id_valid = function(){
-      return /^adr+/.test(self.easypost_id());
-    }
+      return (/^adr+/).test(self.easypost_id());
+    };
     self.name = ko.observable(data.name);
     self.company = ko.observable(data.company);
     self.name.extend({
       required: {
-        onlyIf: function() {return (!self.company() && !self.id_valid())},
-        message: "Name or Company required"
-      }
-    }); 
-    self.company.extend({
-      required: {
-        onlyIf: function() {return (!self.name() && !self.id_valid())},
+        onlyIf: function() {return (!self.company() && !self.id_valid());},
         message: "Name or Company required"
       }
     });
-    self.street1 = ko.observable(data.street1).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
+    self.company.extend({
+      required: {
+        onlyIf: function() {return (!self.name() && !self.id_valid());},
+        message: "Name or Company required"
+      }
+    });
+    self.street1 = ko.observable(data.street1).extend({ required: { onlyIf: function() {return !self.id_valid();}}});
     self.street2 = ko.observable(data.street2);
-    self.city = ko.observable(data.city).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
+    self.city = ko.observable(data.city).extend({ required: { onlyIf: function() {return !self.id_valid();}}});
     self.state = ko.observable(data.state);
     self.zip = ko.observable(data.zip);
-    self.country = ko.observable(data.country).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
-    self.phone = ko.observable(data.phone).extend({ required: { onlyIf: function() {return !self.id_valid()}}});
-    self.email = ko.observable(data.email);   
+    self.country = ko.observable(data.country).extend({ required: { onlyIf: function() {return !self.id_valid();}}});
+    self.phone = ko.observable(data.phone).extend({ required: { onlyIf: function() {return !self.id_valid();}}});
+    self.email = ko.observable(data.email);
     self.searchterm = ko.observable().extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
-    self.suggestions = ko.observableArray([]);  
+    self.suggestions = ko.observableArray([]);
     self.select = function(selection) {
-      self.suggestions([]); 
-      if( !selection.disabled ){   
+      self.suggestions([]);
+      if( !selection.disabled ){
         self.name(selection.name);
         self.company(selection.company);
         self.street1(selection.street1);
@@ -51,18 +51,18 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
     };
     self.asText = ko.computed( function(){
       var nameparams = [
-        self.name(), 
-        self.company(), 
+        self.name(),
+        self.company(),
       ];
 
-      var addrparams = [       
-        self.street1(), 
-        self.street2(), 
-        self.city(), 
+      var addrparams = [
+        self.street1(),
+        self.street2(),
+        self.city(),
         self.state(),
-        self.zip(), 
-        self.country(), 
-        self.phone(), 
+        self.zip(),
+        self.country(),
+        self.phone(),
         self.email()
       ];
       var text = '';
@@ -81,7 +81,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
           }
           else{
             text += addrparams[i] + '<br>';
-          }            
+          }
         }
       }
       return text;
@@ -90,7 +90,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
       self.select({});
       self.searchterm('');
       return true;
-    };     
+    };
     ko.computed(function(){
       var query = self.searchterm();
       if(self.searchterm()){
@@ -108,9 +108,9 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
                 self.suggestions([]);
               }, 4000);
           }
-        })
+        });
       }
-    })
+    });
     self.isValid = function(){
       if(ko.validation.group(self)().length){
         ko.validation.group(self).showAllMessages(true);
@@ -119,7 +119,7 @@ define(['plugins/http', 'plugins/router', 'durandal/app', 'knockout', 'info'], f
       else{
         return true;
       }
-    }
+    };
   };
-  return Address; 
+  return Address;
 }); //end module definition
